@@ -11,7 +11,7 @@ public class Bot extends jeu.Joueur implements reseau.JoueurReseauInterface {
     
     private int nombreLivres;
     
-    Bot(String id, String cle) {
+    public Bot(String id, String cle) {
         super(id);
         key = cle;
         brain = new Brain();

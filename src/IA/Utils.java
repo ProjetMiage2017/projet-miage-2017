@@ -39,16 +39,16 @@ public class Utils {
 	 * @param J l'ennemi
 	 * @return nb tours
 	 */
-	public int getTurnsToKill(Joueur J){
+	public static int getTurnsToKill(Joueur J){
 		return J.donneEsprit()/20;
 	}
 	
 	/**
-	 * Fonction qui determine les degats reçus suite à un combat
+	 * Fonction qui determine les degats reÃ§us suite Ã  un combat
 	 * @param J l'ennemi
 	 * @return degatsRecus
 	 */
-	public int getDamageGivenBy(Joueur J, boolean avantage){
+	public static int getDamageGivenBy(Joueur J, boolean avantage){
 		// nb tour (-1 si on a l avantage) * degats + nb de PE que peut nous couter les actions
 		if(avantage)
 			return (getTurnsToKill(J) -1)*20 + getTurnsToKill(J)-1;
@@ -62,7 +62,7 @@ public class Utils {
 	 * @param avantage si on engage le combat
 	 * @return isKillable
 	 */
-	public boolean isEnnemyKillable(Joueur J, boolean avantage){
+	public static boolean isEnnemyKillable(Joueur J, boolean avantage){
 		return getDamageGivenBy(J, avantage) < Brain.JOUEUR.donneEsprit();	
 	}
 	
@@ -72,7 +72,7 @@ public class Utils {
 	 * @return isWorth
 	 * @TODO
 	 */
-	public boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
+	public static boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
 		if(isEnnemyKillable(J, avantage)){
 			if(avantage){
 				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20< getDamageGivenBy(J, avantage);
@@ -94,6 +94,7 @@ public class Utils {
 	 */
 	public static Joueur[] getJoueurs(Plateau t) {
 		HashMap<Integer, ArrayList<Point>> recherche = t.cherche(new Point(t.donneTaille() / 2, t.donneTaille() / 2), t.donneTaille() / 2, Plateau.CHERCHE_JOUEUR);
+		System.out.println(recherche);
 		Joueur[] joueurs = new Joueur[recherche.get(Plateau.CHERCHE_JOUEUR).size()];
 		for (int i = 0; i < joueurs.length; i++) {
 			joueurs[i] = t.donneJoueurEnPosition(recherche.get(Plateau.CHERCHE_JOUEUR).get(i));
@@ -150,7 +151,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Renvoie la distance réelle entre deux points
+	 * Renvoie la distance rï¿½elle entre deux points
 	 * @param depart 
 	 * @param arrivee
 	 * @return distance
@@ -204,7 +205,7 @@ public class Utils {
 	}
 	
 	/** 
-	 * Determine le livre le plus proche. Si 2 livres sont autant proches, alors vise les livres deja capturés par les autres joueurs en priorité
+	 * Determine le livre le plus proche. Si 2 livres sont autant proches, alors vise les livres deja capturï¿½s par les autres joueurs en prioritï¿½
 	 * @return la coord du livre
 	 */
 	public static Point getLivreLePlusProche(){
