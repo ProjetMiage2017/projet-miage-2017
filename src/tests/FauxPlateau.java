@@ -20,7 +20,7 @@ public class FauxPlateau extends Plateau {
 	@SuppressWarnings({ "serial", "unused" })
 	@Override
 	public HashMap<Integer, ArrayList<Point>> cherche(Point depart, int rayon, int masqueDeRecherche) {
-		if (masqueDeRecherche == Plateau.CHERCHE_LIVRE) return super.cherche(depart, rayon, masqueDeRecherche);
+		if (masqueDeRecherche != Plateau.CHERCHE_JOUEUR) return super.cherche(depart, rayon, masqueDeRecherche);
 		
 		HashMap<Integer, ArrayList<Point>> map = new HashMap<Integer, ArrayList<Point>>();
 		ArrayList<Point> list = new ArrayList<Point>();

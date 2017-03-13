@@ -79,12 +79,27 @@ public class TestUtils {
 	}
 
 	/**
+	 * Compte les livres dans le plateau, sans passer par Utils
+	 * @return nombre de livres
+	 */
+	protected int getBookCount() {
+		return (plateauStr.length() - plateauStr.replace("$-", "").length()) / 2; // http://stackoverflow.com/a/8910767
+	}
+	
+	/**
+	 * Compte les lits dans le plateau, sans passer par Utils
+	 * @return nombre de livres
+	 */
+	protected int getBedCount() {
+		return (plateauStr.length() - plateauStr.replace("[]", "").length()) / 2; // http://stackoverflow.com/a/8910767
+	}
+	
+	/**
 	 * Teste la méthode getTotalLivre()
 	 */
 	@Test
 	public void testGetTotalLivre() {
-		int expected = (plateauStr.length() - plateauStr.replace("$-", "").length()) / 2; // compter les occurrences - http://stackoverflow.com/a/8910767
-		assertEquals(expected, Utils.getTotalLivre());
+		assertEquals(getBookCount(), Utils.getTotalLivre());
 	}
 	
 	/**
@@ -154,5 +169,21 @@ public class TestUtils {
 		for (int i = 0; i < 3; i++) {
 			assertEquals(i+1, j[i].donneCouleurNumerique());
 		}
+	}
+	
+	/**
+	 * Teste la méthode getLivres()
+	 */
+	@Test
+	public void testGetLivres() {
+		assertEquals(getBookCount(), Utils.getLivres(plateau).length);
+	}
+	
+	/**
+	 * Teste la méthode getLits()
+	 */
+	@Test
+	public void testGetLits() {
+		assertEquals(getBedCount(), Utils.getLits(plateau).length);
 	}
 }
