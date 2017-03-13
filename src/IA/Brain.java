@@ -53,6 +53,9 @@ public class Brain {
 		Point positionJoueur = JOUEUR.donnePosition();
 		int nbLivreJoueur = Utils.getNombreLivre(JOUEUR);
 		int nbEspritJoueur = JOUEUR.donneEsprit();
+		
+		System.out.println(nbLivreJoueur);
+		
 		//@TODO
 		if(nbLivreJoueur <= NB_LIVRE_FAIBLE){
 			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
