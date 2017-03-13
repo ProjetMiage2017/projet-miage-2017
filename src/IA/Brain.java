@@ -85,11 +85,14 @@ public class Brain {
 				for(Point livre : livres) {
 					int dist = Utils.getDistance(JOUEUR.donnePosition(), livre);
 					if (livresProches.size() == 0 || dist <= Utils.getDistance(JOUEUR.donnePosition(), livresProches.get(0))) {
-						livresProches.add(livre);
-						distanceLivreProche = dist;
-						
-						if (Plateau.donneProprietaireDuLivre(PLATEAU.donneContenuCellule(livre)) != 0) {
-							livreAdverse = livre;
+						int proprietaire = Plateau.donneProprietaireDuLivre(PLATEAU.donneContenuCellule(livre));
+						if (proprietaire != JOUEUR.donneCouleurNumerique() + 1) {
+							livresProches.add(livre);
+							distanceLivreProche = dist;
+
+							if (proprietaire != 0) {
+								livreAdverse = livre;
+							}
 						}
 					}
 				}
@@ -116,6 +119,7 @@ public class Brain {
 
 		this.objectif = this.nouvelObjectif();
 		if (this.objectif == null) return Action.RIEN;
+		System.out.println("OBJECTIF = " + this.objectif);
 
 		Node objNode = PLATEAU.donneCheminEntre(JOUEUR.donnePosition(), this.objectif.position()).get(0);
 		Point objPoint = new Point(objNode.getPosX(), objNode.getPosY());
