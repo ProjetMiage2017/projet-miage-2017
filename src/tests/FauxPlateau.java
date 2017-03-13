@@ -36,7 +36,6 @@ public class FauxPlateau extends Plateau {
 	public Joueur donneJoueurEnPosition(Point pos) {
 		FauxJoueur fj = new FauxJoueur();
 		fj.setCouleur((int) pos.getX());
-		System.out.println(fj.donneCouleurNumerique());
 		return fj;
 	}
 }

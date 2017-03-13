@@ -94,7 +94,6 @@ public class Utils {
 	 */
 	public static Joueur[] getJoueurs(Plateau t) {
 		HashMap<Integer, ArrayList<Point>> recherche = t.cherche(new Point(t.donneTaille() / 2, t.donneTaille() / 2), t.donneTaille() / 2, Plateau.CHERCHE_JOUEUR);
-		System.out.println(recherche);
 		Joueur[] joueurs = new Joueur[recherche.get(Plateau.CHERCHE_JOUEUR).size()];
 		for (int i = 0; i < joueurs.length; i++) {
 			joueurs[i] = t.donneJoueurEnPosition(recherche.get(Plateau.CHERCHE_JOUEUR).get(i));
@@ -167,11 +166,15 @@ public class Utils {
 	 * @return position relative
 	 */
 	public static Action pointCardinal(Point referentiel, Point destination) {
+		if (referentiel.equals(destination)) return Action.RIEN;
+		
 		if (referentiel.getY() == destination.getY()) {
 			return referentiel.getX() < destination.getX() ? Action.DROITE : Action.GAUCHE;
-		} else {
+		} else if (referentiel.getX() == destination.getX()) {
 			return referentiel.getY() < destination.getY() ? Action.BAS : Action.HAUT; 
 		}
+		
+		return Action.RIEN;
 	}
 
 	/** 

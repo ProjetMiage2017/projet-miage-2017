@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.awt.Point;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -9,6 +11,7 @@ import IA.Brain;
 import IA.Utils;
 import clientdesarenes.Bot;
 import jeu.Joueur;
+import jeu.Joueur.Action;
 import jeu.MaitreDuJeu;
 
 /**
@@ -185,5 +188,43 @@ public class TestUtils {
 	@Test
 	public void testGetLits() {
 		assertEquals(getBedCount(), Utils.getLits(plateau).length);
+	}
+	
+	/**
+	 * Teste la méthode pointLePlusProche()
+	 */
+	@Test
+	public void testPointLePlusProche() {
+		Point[] points = new Point[5];
+		for (int i = 0; i < points.length; i++) {
+			points[i] = new Point((i*2) + 1, (i*2) + 1);
+		}
+		
+		assertEquals(new Point(1, 1), Utils.pointLePlusProche(new Point(2, 1), points));
+		assertEquals(new Point(1, 1), Utils.pointLePlusProche(new Point(1, 1), points));
+		assertEquals(new Point(9, 9), Utils.pointLePlusProche(new Point(15, 15), points));
+	}
+	
+	/**
+	 * Teste la méthode getDistance()
+	 */
+	@Test
+	public void testGetDistance() {
+		assertEquals(10, Utils.getDistance(new Point(5, 5), new Point(10, 10)));
+		assertEquals(10, Utils.getDistance(new Point(0, 0), new Point(0, 10)));
+		assertEquals(10, Utils.getDistance(new Point(0, 0), new Point(10, 0)));
+	}
+	
+	/**
+	 * Teste la méthode pointCardinal()
+	 */
+	@Test
+	public void testPointCardinal() {
+		assertEquals(Action.GAUCHE, Utils.pointCardinal(new Point (2,2), new Point (0, 2)));
+		assertEquals(Action.DROITE, Utils.pointCardinal(new Point (2,2), new Point (5, 2)));
+		assertEquals(Action.HAUT, Utils.pointCardinal(new Point (2,2), new Point (2, 0)));
+		assertEquals(Action.BAS, Utils.pointCardinal(new Point (2,2), new Point (2, 5)));
+		assertEquals(Action.RIEN, Utils.pointCardinal(new Point (2,2), new Point (2, 2)));
+		assertEquals(Action.RIEN, Utils.pointCardinal(new Point (2,2), new Point (3, 3)));
 	}
 }
