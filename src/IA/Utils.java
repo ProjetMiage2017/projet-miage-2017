@@ -150,6 +150,16 @@ public class Utils {
 	}
 	
 	/**
+	 * Renvoie la distance r�elle entre deux points
+	 * @param depart 
+	 * @param arrivee
+	 * @return distance
+	 */
+	public static int getDistanceWithObstacles(Point depart, Point arrivee){
+		return Brain.PLATEAU.donneCheminEntre(depart, arrivee).size();
+	}
+	
+	/**
 	 * Détermine la position relative d'un point par rapport à un autre
 	 * @param referentiel
 	 * @param destination
@@ -170,13 +180,15 @@ public class Utils {
 	public static Joueur getJoueurLePlusProche(){
 		Joueur[] joueurs = getJoueurs(Brain.PLATEAU);
 		Joueur adversaireLePlusProche = null;
+		int distAdversaireLePlusProche = 0;
 		for(Joueur j : joueurs) {
+			int distJoueur = Utils.getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), j.donnePosition());
 			//si c'est notre joueur on passe
 			if (j.donneCouleurNumerique() == Brain.JOUEUR.donneCouleurNumerique()) continue;
 			
-			int dist = Utils.getDistance(Brain.JOUEUR.donnePosition(), j.donnePosition());
-			if (adversaireLePlusProche == null || dist < Utils.getDistance(Brain.JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition())) {
+			if (adversaireLePlusProche == null || distAdversaireLePlusProche > distJoueur) {
 				adversaireLePlusProche = j;
+				distAdversaireLePlusProche = distJoueur;
 			}
 		}
 		return adversaireLePlusProche;
@@ -188,7 +200,7 @@ public class Utils {
 	 */
 	public static int getDistanceDuJoueurLePlusProche(){
 		Joueur adversaireLePlusProche = getJoueurLePlusProche();
-		return getDistance(Brain.JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition());
+		return getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition());
 	}
 	
 	/** 
@@ -198,11 +210,16 @@ public class Utils {
 	public static Point getLivreLePlusProche(){
 		Point[] livres = getLivres(Brain.PLATEAU);
 		Point livreLePlusProche = null;
+		int distLivreLePlusProche = 0;
 		for(Point livre : livres) {
 			int proprietaire = Plateau.donneProprietaireDuLivre(Brain.PLATEAU.donneContenuCellule(livre));
+			int distLivre = Utils.getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), livre);
 			if (proprietaire == Brain.JOUEUR.donneCouleurNumerique() +1) continue; 
-			int dist = Utils.getDistance(Brain.JOUEUR.donnePosition(), livre);
-			if (livreLePlusProche == null || dist <= Utils.getDistance(Brain.JOUEUR.donnePosition(), livre)) {
+			if (livreLePlusProche == null || distLivreLePlusProche > distLivre) {
+					livreLePlusProche = livre;
+					distLivreLePlusProche = distLivre;
+				}
+			else if(distLivreLePlusProche == distLivre){
 				//0 etant un livre sans proprietaire
 				if(livreLePlusProche == null || Plateau.donneProprietaireDuLivre(Brain.PLATEAU.donneContenuCellule(livreLePlusProche)) != 0){
 					livreLePlusProche = livre;
@@ -218,7 +235,7 @@ public class Utils {
 	 */
 	public static int getDistanceDuLivreLePlusProche(){
 		Point livreLePlusProche = getLivreLePlusProche();
-		return getDistance(Brain.JOUEUR.donnePosition(), livreLePlusProche);
+		return getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), livreLePlusProche);
 	}
 	
 	

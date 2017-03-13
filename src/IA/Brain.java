@@ -70,7 +70,7 @@ public class Brain {
 		Point[] livres = Utils.getLivres(PLATEAU);
 		Point[] lits = Utils.getLits(PLATEAU);
 		
-		if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
+		//if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
 			if (distanceAdversaireProche == 1 && adversaireLePlusProche.donneEsprit() < JOUEUR.donneEsprit()) { // Adversaire proche + tuable en un coup
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			} 
@@ -85,9 +85,9 @@ public class Brain {
 					return new Objectif(Plateau.CHERCHE_LIT, Utils.pointLePlusProche(JOUEUR.donnePosition(), lits));
 				}
 			}
-		}
+		//}
 		
-		return null;
+		//return null;
 	}
 
 	/**
@@ -104,12 +104,6 @@ public class Brain {
 		Node objNode = PLATEAU.donneCheminEntre(JOUEUR.donnePosition(), this.objectif.position()).get(0);
 		Point objPoint = new Point(objNode.getPosX(), objNode.getPosY());
 		return Utils.pointCardinal(JOUEUR.donnePosition(), objPoint);
-	}
-	
-	public Action livreNullEspritFaible(){
-		Action returnAction = Action.RIEN;
-		
-		return returnAction;
 	}
 
 }
