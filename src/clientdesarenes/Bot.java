@@ -14,11 +14,13 @@ public class Bot extends jeu.Joueur implements reseau.JoueurReseauInterface {
     }
     
     @Override
-    public Joueur.Action faitUneAction(Plateau t) {  
+    public Joueur.Action faitUneAction(Plateau t) { 
+    	Action TESTRANDOM = super.faitUneAction(t);
     	Brain brain = new Brain(t, this);
     	Action action = brain.run();
         System.out.println("Bot.faitUneAction: Je joue " + action); 
-        return action;
+        //return action;
+        return TESTRANDOM;
     }
             
     @Override

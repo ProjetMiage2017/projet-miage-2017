@@ -1,6 +1,8 @@
 package IA;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import jeu.*;
 import IA.Brain;
@@ -17,9 +19,18 @@ public class Utils {
 	 * @return nb livres
 	 */
 	public static int getNombreLivre(Joueur J){
-		int returnNbLivres = 0 ;
-		Brain.PLATEAU.cherche(new Point(Brain.PLATEAU.donneTaille()/2,Brain.PLATEAU.donneTaille()/2), Brain.PLATEAU.donneTaille(), Brain.PLATEAU.ENDROIT_LIVRE_J1);
-		return returnNbLivres;
+		int ENDROIT_LIVRE_J = 0;
+		switch(J.donneCouleurNumerique()){
+			case 0 : ENDROIT_LIVRE_J = Brain.PLATEAU.ENDROIT_LIVRE_J1; break;
+			case 1 : ENDROIT_LIVRE_J = Brain.PLATEAU.ENDROIT_LIVRE_J2; break;
+			case 2 : ENDROIT_LIVRE_J = Brain.PLATEAU.ENDROIT_LIVRE_J3; break;
+			case 3 : ENDROIT_LIVRE_J = Brain.PLATEAU.ENDROIT_LIVRE_J4; break;
+		}
+		System.out.println(J.donneCouleurNumerique());
+		System.out.println(Brain.PLATEAU.donneTaille());
+		HashMap<Integer, ArrayList<Point> > hmLivres= Brain.PLATEAU.cherche(new Point(Brain.PLATEAU.donneTaille()/2,Brain.PLATEAU.donneTaille()/2), Brain.PLATEAU.donneTaille()/2, Brain.PLATEAU.MASQUE_ENDROITS|ENDROIT_LIVRE_J);
+		 System.out.println(hmLivres);
+		return hmLivres.size();
 	}
 	
 	/*
