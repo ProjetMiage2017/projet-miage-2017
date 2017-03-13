@@ -19,7 +19,7 @@ public class Utils {
 	 * @return nb livres
 	 */
 	public static int getTotalLivre(){
-		HashMap<Integer, ArrayList<Point> > hmLivres= Brain.PLATEAU.cherche(new Point(Brain.PLATEAU.donneTaille()/2,Brain.PLATEAU.donneTaille()/2), Brain.PLATEAU.donneTaille()/2, Brain.PLATEAU.CHERCHE_LIVRE);
+		HashMap<Integer, ArrayList<Point> > hmLivres= Brain.PLATEAU.cherche(new Point(Brain.PLATEAU.donneTaille()/2,Brain.PLATEAU.donneTaille()/2), Brain.PLATEAU.donneTaille()/2, Plateau.CHERCHE_LIVRE);
 		return hmLivres.get(2).size();
 	}
 	
