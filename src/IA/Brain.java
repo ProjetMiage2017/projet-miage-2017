@@ -1,30 +1,46 @@
 package IA;
 
+import java.awt.Point;
+
 import clientdesarenes.Bot;
 import jeu.Plateau;
 import jeu.Joueur.*;
 
 /*
  * Classe permettant de réaliser le choix de l'action
- * @author Jeremy Rossignol
+ * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class Brain {
 	/*
-	 *  plateau sur lequel le joueur joue
+	 *  Plateau sur lequel le joueur joue
 	 */
-	private Plateau plateau;
+	public static Plateau PLATEAU;
 	/*
-	 *  joueur
+	 *  Joueur
 	 */
-	private Bot joueur;
+	public static Bot JOUEUR;
+	
+	
+	/*
+	 * Constantes utiles
+	 */
+
+	int NB_LIVRE_NULL = 0;
+	int NB_LIVRE_FAIBLE = 1; //@TODO la calculer en fonctions des livres max sur la map
+	int NB_LIVRE_MOYEN = 2;
+	int NB_LIVRE_IMPORTANT = 3;
+	
+	int NB_ESPRIT_FAIBLE = 21;
+	int NB_ESPRIT_MILIEU = 50;
+	int NB_ESPRIT_MOYEN = 61;
+	int NB_ESPRIT_IMPORTANT = 81;
 	
 	/*
 	 * Constructeur
 	 */
 	public Brain(Plateau plateau, Bot joueur) {
-		super();
-		this.plateau = plateau;
-		this.joueur = joueur;
+		PLATEAU = plateau;
+		JOUEUR = joueur;
 	}
 
 	/*
@@ -34,20 +50,70 @@ public class Brain {
 	 */
 	public Action run(){
 		Action returnAction = Action.RIEN;
+		Point positionJoueur = JOUEUR.donnePosition();
+		int nbLivreJoueur = Utils.getNombreLivre(JOUEUR);
+		int nbEspritJoueur = JOUEUR.donneEsprit();
 		//@TODO
+		if(nbLivreJoueur <= NB_LIVRE_FAIBLE){
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+				livreNullEspritFaible();
+			}
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
+			}
+			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
+			}
+			else{	
+			}
+		}
+		else if(nbLivreJoueur <= NB_LIVRE_MOYEN){
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
+			}
+			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
+			}
+			else{	
+			}
+		}
+		else if(nbLivreJoueur <= NB_LIVRE_IMPORTANT){
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
+			}
+			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
+			}
+			else{	
+			}
+		}
+		else{
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
+			}
+			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
+			}
+			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
+			}
+			else{	
+			}
+		}
+			
+				
 		return returnAction;
 	}
 	
-	/*
-	 * Fonction qui calcule si l'on possède beaucoup d elivres par rapport aux autres ou pas
-	 * @return position et avance sur le precedent 
-	 */
-	public int compareNbLivres(){
-		int returnNbLivres = 0 ;
-		//this.plateau.cherche(this.plateau.ENDROIT_LIVRE_J1);
-		//@TODO
-		return returnNbLivres;
+	public Action livreNullEspritFaible(){
+		Action returnAction = Action.RIEN;
+		
+		return returnAction;
 	}
+
 	
 	
 }
