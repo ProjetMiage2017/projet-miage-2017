@@ -1,25 +1,32 @@
 package IA;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import clientdesarenes.Bot;
 import jeu.Plateau;
+import jeu.astar.Node;
+import jeu.Joueur;
 import jeu.Joueur.*;
 
-/*
- * Classe permettant de r�aliser le choix de l'action
+/**
+ * Classe permettant de réaliser le choix de l'action
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class Brain {
-	/*
+	/**
 	 *  Plateau sur lequel le joueur joue
 	 */
 	public static Plateau PLATEAU;
-	/*
+	/**
 	 *  Joueur
 	 */
-	public static Bot JOUEUR;
+	public static Bot JOUEUR; 
 	
+	/**
+	 * Objectif actuel du bot
+	 */
+	private Objectif objectif;
 	
 	/*
 	 * Constantes utiles
@@ -28,7 +35,7 @@ public class Brain {
 	int NB_LIVRE_TOTAL = 0;
 	
 	int NB_LIVRE_NULL = 0;
-	int NB_LIVRE_FAIBLE = 1; //@TODO la calculer en fonctions des livres max sur la map
+	int NB_LIVRE_FAIBLE = 1;
 	int NB_LIVRE_MOYEN = 2;
 	int NB_LIVRE_IMPORTANT = 3;
 	
@@ -40,7 +47,7 @@ public class Brain {
 	/*
 	 * Constructeur
 	 */
-	public Brain(Plateau plateau, Bot joueur) {
+	public void setPlateauEtJoueur(Plateau plateau, Bot joueur) {
 		PLATEAU = plateau;
 		JOUEUR = joueur;
 		NB_LIVRE_TOTAL = Utils.getTotalLivre();
@@ -48,73 +55,71 @@ public class Brain {
 		NB_LIVRE_MOYEN = NB_LIVRE_TOTAL/4;
 		NB_LIVRE_IMPORTANT = NB_LIVRE_TOTAL/2;
 	}
+	
+	protected Objectif nouvelObjectif() {		
+		int nombreLivres = JOUEUR.nombreLivres();
+		Joueur[] joueurs = Utils.getJoueurs(PLATEAU);
+		
+		Joueur adversaireLePlusProche = null;
+		int distanceAdversaireProche = 0;
+		for(Joueur j : joueurs) {
+			if (j.donneCouleurNumerique() == JOUEUR.donneCouleurNumerique()) continue;
+			
+			int dist = Utils.getDistance(JOUEUR.donnePosition(), j.donnePosition());
+			if (adversaireLePlusProche == null || dist < Utils.getDistance(JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition())) {
+				adversaireLePlusProche = j;
+				distanceAdversaireProche = dist;
+			}
+		}
+		
+		Point[] livres = Utils.getLivres(PLATEAU);
+		Point[] lits = Utils.getLits(PLATEAU);
+		
+		if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
+			if (distanceAdversaireProche == 1 && adversaireLePlusProche.donneEsprit() < JOUEUR.donneEsprit()) { // Adversaire proche + tuable en un coup
+				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+			} else {
+				ArrayList<Point> livresProches = new ArrayList<Point>();
+				Point livreAdverse = null;
+				int distanceLivreProche = 0;
+				for(Point livre : livres) {
+					int dist = Utils.getDistance(JOUEUR.donnePosition(), livre);
+					if (livresProches.size() == 0 || dist <= Utils.getDistance(JOUEUR.donnePosition(), livresProches.get(0))) {
+						livresProches.add(livre);
+						distanceLivreProche = dist;
+						
+						if (Plateau.donneProprietaireDuLivre(PLATEAU.donneContenuCellule(livre)) != 0) {
+							livreAdverse = livre;
+						}
+					}
+				}
+				
+				if (livreAdverse == null) { // Aucun des livres à proximité n'appartient à quelqu'un
+					return new Objectif(Plateau.CHERCHE_LIVRE, livresProches.get(0)); 
+				} else if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // Livre appartenant à quelqu'un
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreAdverse);
+				} else { // Aucun des livres n'est prenable
+					return new Objectif(Plateau.CHERCHE_LIT, Utils.pointLePlusProche(JOUEUR.donnePosition(), lits));
+				}
+			}
+		}
+		
+		return null;
+	}
 
 	/*
-	 * Fonction principale qui d�termine le choix de l'action. Utilise toutes les autres fonctions de la classe
+	 * Fonction principale qui détermine le choix de l'action. Utilise toutes les autres fonctions de la classe
 	 * @param plateau
 	 * @return returnAction
 	 */
 	public Action run(){
-		Action returnAction = Action.RIEN;
-		Point positionJoueur = JOUEUR.donnePosition();
-		int nbLivreJoueur = PLATEAU.nombreDeLivresJoueur(JOUEUR.donneCouleurNumerique());
-		int nbEspritJoueur = JOUEUR.donneEsprit();
-				
-		//@TODO
-		if(nbLivreJoueur <= NB_LIVRE_FAIBLE){
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-				livreNullEspritFaible();
-			}
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
-			}
-			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
-			}
-			else{	
-			}
-		}
-		else if(nbLivreJoueur <= NB_LIVRE_MOYEN){
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
-			}
-			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
-			}
-			else{	
-			}
-		}
-		else if(nbLivreJoueur <= NB_LIVRE_IMPORTANT){
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
-			}
-			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
-			}
-			else{	
-			}
-		}
-		else{
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			if (nbEspritJoueur < NB_ESPRIT_FAIBLE){
-			}
-			else if (nbEspritJoueur < NB_ESPRIT_MOYEN){
-			}
-			else if(nbEspritJoueur < NB_ESPRIT_IMPORTANT){
-			}
-			else{	
-			}
-		}
-		
-		
-			
-				
-		return returnAction;
+
+		this.objectif = this.nouvelObjectif();
+		if (this.objectif == null) return Action.RIEN;
+
+		Node objNode = PLATEAU.donneCheminEntre(JOUEUR.donnePosition(), this.objectif.position()).get(0);
+		Point objPoint = new Point(objNode.getPosX(), objNode.getPosY());
+		return Utils.pointCardinal(JOUEUR.donnePosition(), objPoint);
 	}
 	
 	public Action livreNullEspritFaible(){
@@ -123,6 +128,4 @@ public class Brain {
 		return returnAction;
 	}
 
-	
-	
 }
