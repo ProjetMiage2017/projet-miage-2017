@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import jeu.*;
 import jeu.Joueur.Action;
-import jeu.astar.Node;
 import IA.Brain;
 
 /*
