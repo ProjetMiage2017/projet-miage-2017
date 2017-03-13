@@ -1,5 +1,6 @@
 package clientdesarenes;
 
+import IA.Brain;
 import jeu.Joueur;
 import jeu.Plateau;
 
@@ -13,10 +14,11 @@ public class Bot extends jeu.Joueur implements reseau.JoueurReseauInterface {
     }
     
     @Override
-    public Joueur.Action faitUneAction(Plateau t) {   
-        Action a = super.faitUneAction(t);
-        System.out.println("Bot.faitUneAction: Je joue " + a); 
-        return a;
+    public Joueur.Action faitUneAction(Plateau t) {  
+    	Brain brain = new Brain(t, this);
+    	Action action = brain.run();
+        System.out.println("Bot.faitUneAction: Je joue " + action); 
+        return action;
     }
             
     @Override
