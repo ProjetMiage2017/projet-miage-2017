@@ -129,11 +129,12 @@ public class Utils {
 	 */
 	public static Point pointLePlusProche(Point position, Point[] points) {
 		Point pp = points[0];
-		int distance = Utils.getDistance(position, pp);
+		int distancePointLePlusProche = Utils.getDistanceWithObstacles(position, pp);
 		for(Point p : points) {
-			int dist = Utils.getDistance(position, p);
-			if (dist < distance) {
+			int dist = Utils.getDistanceWithObstacles(position, p);
+			if (distancePointLePlusProche > dist) {
 				pp = p;
+				distancePointLePlusProche = dist;
 			}
 		}
 		return pp;
@@ -144,6 +145,7 @@ public class Utils {
 	 * @param depart point de départ
 	 * @param arrivee point d'arrivée
 	 * @return distance
+	 * @TODO a delete ?
 	 */
 	public static int getDistance(Point depart, Point arrivee) {
 		return (int) Math.abs(depart.getX() - arrivee.getX() + depart.getY() - arrivee.getY());
