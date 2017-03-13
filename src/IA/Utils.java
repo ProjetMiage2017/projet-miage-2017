@@ -15,7 +15,6 @@ public class Utils {
 	
 	/*
 	 * Fonction qui calcule le nombre de livres total
-	 * @param J
 	 * @return nb livres
 	 */
 	public static int getTotalLivre(){
@@ -25,13 +24,66 @@ public class Utils {
 	
 	/*
 	 * Fonction qui calcule notre position en terme de livre par rapport aux autres joueurs
-	 * @param J
 	 * @return position
+	 * @TODO
+	 * @TODO delete ?
 	 */
 	public static int getPositionForLivres(){
 		int position = 0 ;
-		//@TODO
 		return position;
+	}
+	
+	/*
+	 * Fonction qui calcule le nombre de tours qu'on met pour tuer un ennemi
+	 * @param J l'ennemi
+	 * @return nb tours
+	 */
+	public int getTurnsToKill(Joueur J){
+		return J.donneEsprit()/20;
+	}
+	
+	/*
+	 * Fonction qui determine les degats reçus suite à un combat
+	 * @param J l'ennemi
+	 * @return degatsRecus
+	 */
+	public int getDamageGivenBy(Joueur J, boolean avantage){
+		// nb tour (-1 si on a l avantage) * degats + nb de PE que peut nous couter les actions
+		if(avantage)
+			return (getTurnsToKill(J) -1)*20 + getTurnsToKill(J)-1;
+		else
+			return getTurnsToKill(J)*20 + getTurnsToKill(J)-1;
+	}
+	
+	/*
+	 * Fonction qui determine si on assez de PE pour tuer l'ennemi si on engage ou pas le combat
+	 * @param J l'ennemi
+	 * @param avantage si on engage le combat
+	 * @return isKillable
+	 */
+	public boolean isEnnemyKillable(Joueur J, boolean avantage){
+		return getDamageGivenBy(J, avantage) < Brain.JOUEUR.donneEsprit();	
+	}
+	
+	/*
+	 * Fonction qui verifie si c'est rentable de tuer un ennemi
+	 * @param J l'ennemi
+	 * @return isWorth
+	 * @TODO
+	 */
+	public boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
+		if(isEnnemyKillable(J, avantage)){
+			if(avantage){
+				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20< getDamageGivenBy(J, avantage);
+			}
+			else{
+				// en admettant qu on met au moins 15 tours a l attraper
+				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20 + 15 < getDamageGivenBy(J, avantage);
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	
