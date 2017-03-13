@@ -44,7 +44,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Fonction qui determine les degats reçus suite à un combat
+	 * Fonction qui determine les degats reÃ§us suite Ã  un combat
 	 * @param J l'ennemi
 	 * @return degatsRecus
 	 */
@@ -152,7 +152,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Renvoie la distance réelle entre deux points
+	 * Renvoie la distance rï¿½elle entre deux points
 	 * @param depart 
 	 * @param arrivee
 	 * @return distance
@@ -168,11 +168,15 @@ public class Utils {
 	 * @return position relative
 	 */
 	public static Action pointCardinal(Point referentiel, Point destination) {
+		if (referentiel.equals(destination)) return Action.RIEN;
+		
 		if (referentiel.getY() == destination.getY()) {
 			return referentiel.getX() < destination.getX() ? Action.DROITE : Action.GAUCHE;
-		} else {
+		} else if (referentiel.getX() == destination.getX()) {
 			return referentiel.getY() < destination.getY() ? Action.BAS : Action.HAUT; 
 		}
+		
+		return Action.RIEN;
 	}
 
 	/** 
@@ -206,7 +210,7 @@ public class Utils {
 	}
 	
 	/** 
-	 * Determine le livre le plus proche. Si 2 livres sont autant proches, alors vise les livres deja capturés par les autres joueurs en priorité
+	 * Determine le livre le plus proche. Si 2 livres sont autant proches, alors vise les livres deja capturï¿½s par les autres joueurs en prioritï¿½
 	 * @return la coord du livre
 	 */
 	public static Point getLivreLePlusProche(){
