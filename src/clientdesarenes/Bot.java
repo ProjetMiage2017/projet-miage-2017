@@ -7,16 +7,21 @@ import jeu.Plateau;
 public class Bot extends jeu.Joueur implements reseau.JoueurReseauInterface {
 
     String key;
+    Brain brain;
+    
+    private int nombreLivres;
     
     Bot(String id, String cle) {
         super(id);
         key = cle;
+        brain = new Brain();
     }
     
     @Override
     public Joueur.Action faitUneAction(Plateau t) { 
     	Action TESTRANDOM = super.faitUneAction(t);
-    	Brain brain = new Brain(t, this);
+    	this.nombreLivres = t.nombreDeLivresJoueur(this.donneCouleurNumerique());
+    	brain.setPlateauEtJoueur(t, this);
     	Action action = brain.run();
         System.out.println("Bot.faitUneAction: Je joue " + action); 
         //return action;
@@ -46,5 +51,9 @@ public class Bot extends jeu.Joueur implements reseau.JoueurReseauInterface {
     @Override
     public void deconnecte() {
         System.out.println("Bot: On est déconnecté du serveur.");
+    }
+    
+    public int nombreLivres() {
+    	return this.nombreLivres;
     }
 }
