@@ -71,7 +71,7 @@ public class Brain {
 		Point[] lits = Utils.getLits(PLATEAU);
 		
 		//if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
-			if (distanceAdversaireProche == 1 && adversaireLePlusProche.donneEsprit() < JOUEUR.donneEsprit()) { // Adversaire proche + tuable en un coup
+			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { // Adversaire proche + tuable en un coup
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			} 
 			else {

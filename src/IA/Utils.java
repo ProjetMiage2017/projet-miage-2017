@@ -39,7 +39,7 @@ public class Utils {
 	 * @param J l'ennemi
 	 * @return nb tours
 	 */
-	public int getTurnsToKill(Joueur J){
+	public static int getTurnsToKill(Joueur J){
 		return J.donneEsprit()/20;
 	}
 	
@@ -48,7 +48,7 @@ public class Utils {
 	 * @param J l'ennemi
 	 * @return degatsRecus
 	 */
-	public int getDamageGivenBy(Joueur J, boolean avantage){
+	public static int getDamageGivenBy(Joueur J, boolean avantage){
 		// nb tour (-1 si on a l avantage) * degats + nb de PE que peut nous couter les actions
 		if(avantage)
 			return (getTurnsToKill(J) -1)*20 + getTurnsToKill(J)-1;
@@ -62,7 +62,7 @@ public class Utils {
 	 * @param avantage si on engage le combat
 	 * @return isKillable
 	 */
-	public boolean isEnnemyKillable(Joueur J, boolean avantage){
+	public static boolean isEnnemyKillable(Joueur J, boolean avantage){
 		return getDamageGivenBy(J, avantage) < Brain.JOUEUR.donneEsprit();	
 	}
 	
@@ -70,9 +70,9 @@ public class Utils {
 	 * Fonction qui verifie si c'est rentable de tuer un ennemi
 	 * @param J l'ennemi
 	 * @return isWorth
-	 * @TODO
+	 * @TODO a delete ? C'est toujours rentable si il est proche
 	 */
-	public boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
+	public static boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
 		if(isEnnemyKillable(J, avantage)){
 			if(avantage){
 				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20< getDamageGivenBy(J, avantage);

@@ -7,9 +7,11 @@ import jeu.Plateau;
 public class JeuSoloLocal {
     
     public static void main(String[] args) {
-        Plateau p;     
-        //p = new Plateau(1200, MaitreDuJeu.PLATEAU_PAR_DEFAUT);
-        p = Plateau.generePlateauAleatoire( 1200, 10, 4, 8, 7);
+        Plateau p;
+        
+        //tour 190 : rencontre entre les 2 persos
+        p = new Plateau(1200, MaitreDuJeu.PLATEAU_PAR_DEFAUT);
+        //p = Plateau.generePlateauAleatoire( 1200, 10, 4, 8, 7);
         
         MaitreDuJeu jeu = new MaitreDuJeu(p);
         
