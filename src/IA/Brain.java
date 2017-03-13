@@ -54,6 +54,8 @@ public class Brain {
 		NB_LIVRE_FAIBLE = NB_LIVRE_TOTAL/8;
 		NB_LIVRE_MOYEN = NB_LIVRE_TOTAL/4;
 		NB_LIVRE_IMPORTANT = NB_LIVRE_TOTAL/2;
+	
+		//@TODO un nb de livre qui se met à jour selon les nombres de livre des joueurs?
 	}
 	
 	/**
@@ -61,33 +63,108 @@ public class Brain {
 	 * @return le nouvel objectif
 	 */
 	protected Objectif nouvelObjectif() {		
-		int nombreLivres = JOUEUR.nombreLivres();
-		Joueur[] joueurs = Utils.getJoueurs(PLATEAU);
-		
+		int nombreLivres = JOUEUR.nombreLivres();		
 		Joueur adversaireLePlusProche = Utils.getJoueurLePlusProche();
 		int distanceAdversaireProche = Utils.getDistanceDuJoueurLePlusProche();
 		
-		Point[] livres = Utils.getLivres(PLATEAU);
-		Point[] lits = Utils.getLits(PLATEAU);
+		Point livreProche = Utils.getLivreLePlusProche();
+		int distanceLivreProche = Utils.getDistanceDuLivreLePlusProche();
 		
-		//if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
-			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { // Adversaire proche + tuable en un coup
+		Point litProche = Utils.getLitLePlusProche();
+				
+		//cas desespéré
+		if (nombreLivres <= NB_LIVRE_NULL) {
+			//Cas ennemi a proximite et tuable
+			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { 
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			} 
+			else {				
+				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+				}
+				else { // Aucun des livres n'est prenable ou pas assez d'esprit
+					//@TODO suicide
+					return new Objectif(0, litProche);
+					
+				}
+			}
+		}
+		//cas ou on peut tenter des actions risquées
+		else if(nombreLivres <= NB_LIVRE_FAIBLE){
+			//Cas ennemi a proximite et tuable
+			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
+				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+			}
 			else {
-				Point livreProche = Utils.getLivreLePlusProche();
-				int distanceLivreProche = Utils.getDistanceDuLivreLePlusProche();
 				
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
 					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
 				}
 				else { // Aucun des livres n'est prenable
-					return new Objectif(Plateau.CHERCHE_LIT, Utils.pointLePlusProche(JOUEUR.donnePosition(), lits));
+					return new Objectif(Plateau.CHERCHE_LIT, litProche);
 				}
 			}
-		//}
-		
-		//return null;
+		}
+		//cas ou il faut adapter un comportement assez sécurisé
+		//@TODO
+		else if(nombreLivres <= NB_LIVRE_MOYEN){
+			//Cas ennemi a proximite
+			if (distanceAdversaireProche == 1) {
+				// si il est tuable
+				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+				}
+				//sinon fuir
+				else{
+					return new Objectif(0, Utils.getCaseDispoOpposeA(adversaireLePlusProche.donnePosition()));
+				}	
+			}
+			else {				
+				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+				}
+				else { // Aucun des livres n'est prenable
+					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+				}
+			}
+		}
+		//Cas ou il faut fuir mais on tente tout de meme de tuer les agresseurs (self-defense)
+		//@TODO
+		else if(nombreLivres <= NB_LIVRE_IMPORTANT){
+			//Cas ennemi a proximite
+			if (distanceAdversaireProche == 1) {
+				// si il est tuable
+				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+				}
+				//sinon fuir
+				else{
+					return new Objectif(0, Utils.getCaseDispoOpposeA(adversaireLePlusProche.donnePosition()));
+				}	
+			}
+			else {
+				//utilisation de NB_ESPRIT_MILIEU contrairement aux fonctions precedentes histoire de garder une zone de confort
+				if (JOUEUR.donneEsprit() > NB_ESPRIT_MILIEU + distanceLivreProche) { // cas on peut aller chercher le livre
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+				}
+				else { // Aucun des livres n'est prenable
+					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+				}
+			}
+		}
+		//Cas ou il faut juste fuir et camper à un lit (sans en abuser pour ne pas perdre de PC) pour garder nos livre sle plus longtemps possible
+		//@TODO
+		else{
+
+			if (JOUEUR.donneEsprit() < NB_ESPRIT_IMPORTANT){
+				return new Objectif(Plateau.CHERCHE_LIT, litProche);
+			}
+			else{
+				//@TODO
+				//campe a côté du lit ou se dirige vers le lit le plus proche s'il n'est pas encore a côté
+			}
+			return new Objectif(Plateau.CHERCHE_LIT, litProche);
+		}
 	}
 
 	/**

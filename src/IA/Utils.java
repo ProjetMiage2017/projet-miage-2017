@@ -70,7 +70,7 @@ public class Utils {
 	 * Fonction qui verifie si c'est rentable de tuer un ennemi
 	 * @param J l'ennemi
 	 * @return isWorth
-	 * @TODO a delete ? C'est toujours rentable si il est proche
+	 * @TODO a delete ? C'est toujours rentable si il est proche et killable
 	 */
 	public static boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
 		if(isEnnemyKillable(J, avantage)){
@@ -244,6 +244,35 @@ public class Utils {
 		return getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), livreLePlusProche);
 	}
 	
+	/** 
+	 * Determine le lit le plus proche. 
+	 * @return la coord du livre
+	 */
+	public static Point getLitLePlusProche(){
+		Point[] lits = getLits(Brain.PLATEAU);
+
+		return Utils.pointLePlusProche(Brain.JOUEUR.donnePosition(), lits);
+	}
+	
+	/** 
+	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
+	 * @TODO ameliorer l'algo, voir même si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
+	 * @param le point
+	 * @return le point dispo oppose
+	 */
+	public static Point getCaseDispoOpposeA(Point caseAFuir){
+		Point caseJoueur = Brain.JOUEUR.donnePosition();
+		//xC=2xA-xB 
+		Point caseParfaite = new Point(2*caseAFuir.x - caseJoueur.x, 2*caseAFuir.y - caseJoueur.y);
+		//tenir compte des joueurs plus tard
+		if(Brain.PLATEAU.joueurPeutAllerIci(caseParfaite.x, caseParfaite.y, false, true)){
+			return caseParfaite;
+		}
+		//pourri @TODO trouver une autre coord
+		else{
+			return getLitLePlusProche();
+		}
+	}
 	
 	//@TODO fonction prevision perte d'energie selon l'objectif
 

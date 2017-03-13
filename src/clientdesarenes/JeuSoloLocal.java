@@ -9,7 +9,7 @@ public class JeuSoloLocal {
     public static void main(String[] args) {
         Plateau p;
         
-        //tour 190 : rencontre entre les 2 persos
+        //tour 190 : rencontre entre carapuce et bulbizarre
         p = new Plateau(1200, MaitreDuJeu.PLATEAU_PAR_DEFAUT);
         //p = Plateau.generePlateauAleatoire( 1200, 10, 4, 8, 7);
         
