@@ -44,8 +44,8 @@ public class Brain {
 	int NB_ESPRIT_MOYEN = 61;
 	int NB_ESPRIT_IMPORTANT = 81;
 	
-	/*
-	 * Constructeur
+	/**
+	 * Fonction qui met � jour le joueur et le plateau
 	 */
 	public void setPlateauEtJoueur(Plateau plateau, Bot joueur) {
 		PLATEAU = plateau;
@@ -56,21 +56,16 @@ public class Brain {
 		NB_LIVRE_IMPORTANT = NB_LIVRE_TOTAL/2;
 	}
 	
+	/**
+	 * Fonction qui determine un nouvel Objectif
+	 * @return le nouvel objectif
+	 */
 	protected Objectif nouvelObjectif() {		
 		int nombreLivres = JOUEUR.nombreLivres();
 		Joueur[] joueurs = Utils.getJoueurs(PLATEAU);
 		
-		Joueur adversaireLePlusProche = null;
-		int distanceAdversaireProche = 0;
-		for(Joueur j : joueurs) {
-			if (j.donneCouleurNumerique() == JOUEUR.donneCouleurNumerique()) continue;
-			
-			int dist = Utils.getDistance(JOUEUR.donnePosition(), j.donnePosition());
-			if (adversaireLePlusProche == null || dist < Utils.getDistance(JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition())) {
-				adversaireLePlusProche = j;
-				distanceAdversaireProche = dist;
-			}
-		}
+		Joueur adversaireLePlusProche = Utils.getJoueurLePlusProche();
+		int distanceAdversaireProche = Utils.getDistanceDuJoueurLePlusProche();
 		
 		Point[] livres = Utils.getLivres(PLATEAU);
 		Point[] lits = Utils.getLits(PLATEAU);
@@ -78,30 +73,15 @@ public class Brain {
 		if (nombreLivres <= NB_LIVRE_FAIBLE) { // Peu de livres
 			if (distanceAdversaireProche == 1 && adversaireLePlusProche.donneEsprit() < JOUEUR.donneEsprit()) { // Adversaire proche + tuable en un coup
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
-			} else {
-				ArrayList<Point> livresProches = new ArrayList<Point>();
-				Point livreAdverse = null;
-				int distanceLivreProche = 0;
-				for(Point livre : livres) {
-					int dist = Utils.getDistance(JOUEUR.donnePosition(), livre);
-					if (livresProches.size() == 0 || dist <= Utils.getDistance(JOUEUR.donnePosition(), livresProches.get(0))) {
-						int proprietaire = Plateau.donneProprietaireDuLivre(PLATEAU.donneContenuCellule(livre));
-						if (proprietaire != JOUEUR.donneCouleurNumerique() + 1) {
-							livresProches.add(livre);
-							distanceLivreProche = dist;
-
-							if (proprietaire != 0) {
-								livreAdverse = livre;
-							}
-						}
-					}
-				}
+			} 
+			else {
+				Point livreProche = Utils.getLivreLePlusProche();
+				int distanceLivreProche = Utils.getDistanceDuLivreLePlusProche();
 				
-				if (livreAdverse == null) { // Aucun des livres à proximité n'appartient à quelqu'un
-					return new Objectif(Plateau.CHERCHE_LIVRE, livresProches.get(0)); 
-				} else if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // Livre appartenant à quelqu'un
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreAdverse);
-				} else { // Aucun des livres n'est prenable
+				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+				}
+				else { // Aucun des livres n'est prenable
 					return new Objectif(Plateau.CHERCHE_LIT, Utils.pointLePlusProche(JOUEUR.donnePosition(), lits));
 				}
 			}
@@ -110,7 +90,7 @@ public class Brain {
 		return null;
 	}
 
-	/*
+	/**
 	 * Fonction principale qui détermine le choix de l'action. Utilise toutes les autres fonctions de la classe
 	 * @param plateau
 	 * @return returnAction

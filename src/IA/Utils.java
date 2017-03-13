@@ -8,7 +8,7 @@ import jeu.*;
 import jeu.Joueur.Action;
 import IA.Brain;
 
-/*
+/**
  * Classe regroupant les fonctions utiles au Brain
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
@@ -34,7 +34,7 @@ public class Utils {
 		return position;
 	}
 	
-	/*
+	/**
 	 * Fonction qui calcule le nombre de tours qu'on met pour tuer un ennemi
 	 * @param J l'ennemi
 	 * @return nb tours
@@ -43,7 +43,7 @@ public class Utils {
 		return J.donneEsprit()/20;
 	}
 	
-	/*
+	/**
 	 * Fonction qui determine les degats reçus suite à un combat
 	 * @param J l'ennemi
 	 * @return degatsRecus
@@ -56,7 +56,7 @@ public class Utils {
 			return getTurnsToKill(J)*20 + getTurnsToKill(J)-1;
 	}
 	
-	/*
+	/**
 	 * Fonction qui determine si on assez de PE pour tuer l'ennemi si on engage ou pas le combat
 	 * @param J l'ennemi
 	 * @param avantage si on engage le combat
@@ -66,7 +66,7 @@ public class Utils {
 		return getDamageGivenBy(J, avantage) < Brain.JOUEUR.donneEsprit();	
 	}
 	
-	/*
+	/**
 	 * Fonction qui verifie si c'est rentable de tuer un ennemi
 	 * @param J l'ennemi
 	 * @return isWorth
@@ -163,6 +163,65 @@ public class Utils {
 		}
 	}
 
+	/** 
+	 * Determine l'adversaire le plus proche
+	 * @return l'adversaire 
+	 */
+	public static Joueur getJoueurLePlusProche(){
+		Joueur[] joueurs = getJoueurs(Brain.PLATEAU);
+		Joueur adversaireLePlusProche = null;
+		for(Joueur j : joueurs) {
+			//si c'est notre joueur on passe
+			if (j.donneCouleurNumerique() == Brain.JOUEUR.donneCouleurNumerique()) continue;
+			
+			int dist = Utils.getDistance(Brain.JOUEUR.donnePosition(), j.donnePosition());
+			if (adversaireLePlusProche == null || dist < Utils.getDistance(Brain.JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition())) {
+				adversaireLePlusProche = j;
+			}
+		}
+		return adversaireLePlusProche;
+	}
+	
+	/** 
+	 * Determine la distance avec l'adversaire le plus proche
+	 * @return la distance
+	 */
+	public static int getDistanceDuJoueurLePlusProche(){
+		Joueur adversaireLePlusProche = getJoueurLePlusProche();
+		return getDistance(Brain.JOUEUR.donnePosition(), adversaireLePlusProche.donnePosition());
+	}
+	
+	/** 
+	 * Determine le livre le plus proche. Si 2 livres sont autant proches, alors vise les livres deja capturés par les autres joueurs en priorité
+	 * @return la coord du livre
+	 */
+	public static Point getLivreLePlusProche(){
+		Point[] livres = getLivres(Brain.PLATEAU);
+		Point livreLePlusProche = null;
+		for(Point livre : livres) {
+			int proprietaire = Plateau.donneProprietaireDuLivre(Brain.PLATEAU.donneContenuCellule(livre));
+			if (proprietaire == Brain.JOUEUR.donneCouleurNumerique() +1) continue; 
+			int dist = Utils.getDistance(Brain.JOUEUR.donnePosition(), livre);
+			if (livreLePlusProche == null || dist <= Utils.getDistance(Brain.JOUEUR.donnePosition(), livre)) {
+				//0 etant un livre sans proprietaire
+				if(livreLePlusProche == null || Plateau.donneProprietaireDuLivre(Brain.PLATEAU.donneContenuCellule(livreLePlusProche)) != 0){
+					livreLePlusProche = livre;
+				}
+			}
+		}
+		return livreLePlusProche;
+	}
+	
+	/** 
+	 * Determine la distance avec le livre le plus proche
+	 * @return la distance
+	 */
+	public static int getDistanceDuLivreLePlusProche(){
+		Point livreLePlusProche = getLivreLePlusProche();
+		return getDistance(Brain.JOUEUR.donnePosition(), livreLePlusProche);
+	}
+	
+	
 	//@TODO fonction prevision perte d'energie selon l'objectif
 
 }
