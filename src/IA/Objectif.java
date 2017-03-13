@@ -2,6 +2,8 @@ package IA;
 
 import java.awt.Point;
 
+import jeu.Plateau;
+
 public class Objectif {
 	private int type;
 	private Point position;
@@ -17,5 +19,24 @@ public class Objectif {
 	
 	public Point position() {
 		return this.position;
+	}
+
+	public String toString() {
+		String typeStr = "Case";
+		switch(this.type) {
+		case Plateau.CHERCHE_JOUEUR:
+			typeStr = "Joueur";
+			break;
+		case Plateau.CHERCHE_LIT:
+			typeStr = "Lit";
+			break;
+		case Plateau.CHERCHE_LIVRE:
+			typeStr = "Livre";
+			break;
+		default:
+			typeStr = "Case";
+		}
+
+		return this.position + " " + typeStr;
 	}
 }
