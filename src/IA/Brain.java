@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import clientdesarenes.Bot;
 import jeu.Plateau;
+import jeu.astar.Node;
 import jeu.Joueur;
 import jeu.Joueur.*;
 
@@ -114,7 +115,9 @@ public class Brain {
 	public Action run(){
 		this.objectif = this.nouvelObjectif();
 		// TODO: Se déplacer vers l'objectif
-		return Action.RIEN;
+		Node objNode = PLATEAU.donneCheminEntre(JOUEUR.donnePosition(), this.objectif.position()).get(0);
+		Point objPoint = new Point(objNode.getPosX(), objNode.getPosY());
+		return Utils.pointCardinal(JOUEUR.donnePosition(), objPoint);
 	}
 	
 	public Action livreNullEspritFaible(){
@@ -123,6 +126,4 @@ public class Brain {
 		return returnAction;
 	}
 
-	
-	
 }

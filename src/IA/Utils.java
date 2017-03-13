@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import jeu.*;
+import jeu.Joueur.Action;
 import jeu.astar.Node;
 import IA.Brain;
 
@@ -97,6 +98,20 @@ public class Utils {
 		return (int) Math.abs(depart.getX() - arrivee.getX() + depart.getY() - arrivee.getY());
 	}
 	
+	/**
+	 * Détermine la position relative d'un point par rapport à un autre
+	 * @param referentiel
+	 * @param destination
+	 * @return position relative
+	 */
+	public static Action pointCardinal(Point referentiel, Point destination) {
+		if (referentiel.getY() == destination.getY()) {
+			return referentiel.getX() < destination.getX() ? Action.DROITE : Action.GAUCHE;
+		} else {
+			return referentiel.getY() < destination.getY() ? Action.BAS : Action.HAUT; 
+		}
+	}
+
 	//@TODO fonction prevision perte d'energie selon l'objectif
 
 }
