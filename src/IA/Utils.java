@@ -308,7 +308,6 @@ public class Utils {
 		Point caseParfaite;
 		Point casePossible1;
 		Point casePossible2;
-		System.err.println(actionInterdite);
 
 		switch(actionInterdite){
 			case DROITE :

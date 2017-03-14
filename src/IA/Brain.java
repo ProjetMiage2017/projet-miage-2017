@@ -142,7 +142,6 @@ public class Brain {
 				}
 				//sinon fuir
 				else{
-					System.err.println("FUITE ACTIVE");
 					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()), 2+1);
 				}	
 			}
@@ -172,14 +171,13 @@ public class Brain {
 				}
 				//sinon fuir
 				else{
-					System.err.println("FUITE ACTIVE");
 					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()), 2+1);
 				}	
 			}
 			//fuir si ennemi a 2 cases et plus fort
-			/*else if (distanceAdversaireProche <= 2 && Utils.isEnnemyKillable(adversaireLePlusProche, false)) {
-				return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
-			}*/
+			else if (distanceAdversaireProche <= 2 && Utils.isEnnemyKillable(adversaireLePlusProche, false)) {
+				return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()), 2);
+			}
 			else {
 				//utilisation de NB_ESPRIT_MILIEU contrairement aux fonctions precedentes histoire de garder une zone de confort
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_MILIEU + distanceLivreProche) { // cas on peut aller chercher le livre
@@ -225,14 +223,6 @@ public class Brain {
 	 * @return un nouveau objectif
 	 */
 	public Objectif defineOtherObjectif(){
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-		System.out.println("NOUVEL OBJECTIF");
-
 		Objectif dernierObjectif = Objectif.listeObjectif.get(Objectif.listeObjectif.size()-1);
 		if(dernierObjectif.type() == Plateau.CHERCHE_LIT){
 			return new Objectif(PLATEAU.CHERCHE_LIVRE, Utils.getLivreLePlusProche(), Utils.getDistanceDuLivreLePlusProche());
@@ -250,7 +240,6 @@ public class Brain {
 
 		this.objectif = this.nouvelObjectif();
 		if (this.objectif == null) return Action.RIEN;
-		System.out.println("OBJECTIF = " + this.objectif);
 
 		Node objNode = PLATEAU.donneCheminEntre(JOUEUR.donnePosition(), this.objectif.position()).get(0);
 		Point objPoint = new Point(objNode.getPosX(), objNode.getPosY());
