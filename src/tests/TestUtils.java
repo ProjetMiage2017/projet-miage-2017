@@ -4,82 +4,17 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import IA.Brain;
 import IA.Utils;
-import clientdesarenes.Bot;
 import jeu.Joueur;
 import jeu.Joueur.Action;
-import jeu.MaitreDuJeu;
 
 /**
  * Classe permettant de réaliser le choix de l'action
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
-public class TestUtils {
-	/**
-	 * Maitre du jeu utilisé pour les tests
-	 */
-	static MaitreDuJeu mj;
-	
-	/**
-	 * Plateau utilisé pour les tests
-	 */
-	static FauxPlateau plateau;
-	
-	/**
-	 * Chaîne de caractère représentant un plateau utilisée pour les tests
-	 */
-	static String plateauStr;
-	
-	/**
-	 * Bot utilisé pour les tests
-	 */
-	static Bot joueur;
-	
-	/**
-	 * Faux adversaire utilisé pour les tests
-	 */
-	static FauxJoueur adversaire;
-	
-	/**
-	 * Initialise le jeu avant de lancer les tests
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		plateauStr =  "+----------------------------------------+\n"
-					+ "|######$-    $-############$-    $-######|\n"
-					+ "|######        ##        ##        ######|\n"
-					+ "|####[]    ####            ####    []####|\n"
-					+ "|##      ####  ##        ##  ####      ##|\n"
-					+ "|####            $-    $-            ####|\n"
-					+ "|##########  @1            @4  ##########|\n"
-					+ "|############  ####    ####  ############|\n"
-					+ "|$-##$-        ############        $-##$-|\n"
-					+ "|  $-      $-################$-      $-  |\n"
-					+ "|        ########################        |\n"
-					+ "|        ########################        |\n"
-					+ "|  $-      $-################$-      $-  |\n"
-					+ "|$-##$-        ############        $-##$-|\n"
-					+ "|############  ####    ####  ############|\n"
-					+ "|##########  @2            @3  ##########|\n"
-					+ "|####            $-    $-            ####|\n"
-					+ "|##      ####  ##        ##  ####      ##|\n"
-					+ "|####[]    ####            ####    []####|\n"
-					+ "|######        ##        ##        ######|\n"
-					+ "|######$-    $-############$-    $-######|\n"
-					+ "+----------------------------------------+";
-		plateau = new FauxPlateau(1, plateauStr);
-		
-		mj = new MaitreDuJeu(plateau);
-		joueur = new Bot("test", "test");
-		adversaire = new FauxJoueur();
-		
-		Brain.PLATEAU = plateau;
-		Brain.JOUEUR = joueur;
-	}
+public class TestUtils extends TestBase {
 
 	/**
 	 * Compte les livres dans le plateau, sans passer par Utils
@@ -172,6 +107,10 @@ public class TestUtils {
 		for (int i = 0; i < 3; i++) {
 			assertEquals(i+1, j[i].donneCouleurNumerique());
 		}
+		
+		assertEquals(adversaire, j[0]);
+		assertEquals(j3, j[1]);
+		assertEquals(j4, j[2]);
 	}
 	
 	/**
@@ -223,5 +162,35 @@ public class TestUtils {
 		assertEquals(Action.BAS, Utils.pointCardinal(new Point (2,2), new Point (2, 5)));
 		assertEquals(Action.RIEN, Utils.pointCardinal(new Point (2,2), new Point (2, 2)));
 		assertEquals(Action.RIEN, Utils.pointCardinal(new Point (2,2), new Point (3, 3)));
+	}
+	
+	/**
+	 * Teste la méthode getDistanceWithObstacles()
+	 */
+	@Test
+	public void testGetDistanceWithObstacles() {
+		assertEquals(2, Utils.getDistanceWithObstacles(new Point(4,0), new Point(6,0)));
+		assertEquals(3, Utils.getDistanceWithObstacles(new Point(4,0), new Point(6,1)));
+		assertEquals(9, Utils.getDistanceWithObstacles(new Point(4,0), new Point(6,5)));
+		
+		joueur.setPosition(new Point(1, 8));
+		assertEquals(1, Utils.getDistanceWithObstacles(joueur.donnePosition(), adversaire.donnePosition()));
+	}
+	
+	/**
+	 * Test la méthode getJoueurLePlusProche()
+	 */
+	@Test
+	public void testGetJoueurLePlusProche() {
+		joueur.setPosition(new Point(4, 1));
+		assertEquals(adversaire, Utils.getJoueurLePlusProche());
+		joueur.setPosition(new Point(2, 12));
+		assertEquals(j4, Utils.getJoueurLePlusProche());
+	}
+	
+	@Test
+	public void testGetLivreLePlusProche() {
+		joueur.setPosition(new Point(4, 0));
+		assertEquals(new Point(3, 0), Utils.getLivreLePlusProche());
 	}
 }

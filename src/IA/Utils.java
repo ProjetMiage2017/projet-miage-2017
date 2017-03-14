@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jeu.astar.Node;
+
 import jeu.*;
 import jeu.Joueur.Action;
 import IA.Brain;
@@ -71,7 +73,7 @@ public class Utils {
 	 * @param J l'ennemi
 	 * @param avantage boolean
 	 * @return isWorth
-	 * 
+
 	 */
 	public static boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
 		if(isEnnemyKillable(J, avantage)){
@@ -79,8 +81,10 @@ public class Utils {
 				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20< getDamageGivenBy(J, avantage);
 			}
 			else{
-				// en admettant qu on met au moins 15 tours a l attraper
-				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20 + 15 < getDamageGivenBy(J, avantage);
+				//@TODO
+				//nb de tour à calculer pour être sur qu'on attrape le mecet si il est attrapable
+				int x = 0;
+				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20 + x < getDamageGivenBy(J, avantage);
 			}
 		}
 		else{
@@ -159,7 +163,8 @@ public class Utils {
 	 * @return distance
 	 */
 	public static int getDistanceWithObstacles(Point depart, Point arrivee){
-		return Brain.PLATEAU.donneCheminEntre(depart, arrivee).size();
+		ArrayList<Node> chemin = Brain.PLATEAU.donneCheminEntre(depart, arrivee);
+		return chemin == null ? null : chemin.size();
 	}
 	
 	/**
@@ -256,9 +261,16 @@ public class Utils {
 	}
 	
 	/** 
+<<<<<<< HEAD
 	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
 	 * @param caseAFuir une case
+=======
+	 * Determine la case dspo opposee au point passï¿½ en paramettre par rapport au joueur
+	 * @TODO ameliorer l'algo, voir mï¿½me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
+	 * @param le point
+>>>>>>> 470c3cd113ab540cf8363d3060d9fca0bc2bd598
 	 * @return le point dispo oppose
+	 * @TODO delete ?
 	 */
 	public static Point getCaseDispoOpposeA(Point caseAFuir){
 		Point caseJoueur = Brain.JOUEUR.donnePosition();
@@ -273,7 +285,62 @@ public class Utils {
 			return getLitLePlusProche();
 		}
 	}
+	/**
+	 * Determine la case à aller pour fuir
+	 * @param caseAFuir
+	 * @return case destination
+	 */
 	
-	//@TODO fonction prevision perte d'energie selon l'objectif
+	public static Point fuir(Point caseAFuir){
+		Point caseJoueur = Brain.JOUEUR.donnePosition();
+		Joueur.Action actionInterdite = pointCardinal(caseJoueur, caseAFuir);
+		Point caseParfaite;
+		Point casePossible1;
+		Point casePossible2;
+		System.err.println(actionInterdite);
 
+		switch(actionInterdite){
+			case DROITE :
+				caseParfaite = new Point(caseJoueur.x-1 , caseJoueur.y); 
+				casePossible1 = new Point(caseJoueur.x , caseJoueur.y-1);
+				casePossible2 = new Point(caseJoueur.x , caseJoueur.y+1);
+				break;
+			case GAUCHE :
+				caseParfaite = new Point(caseJoueur.x+1 , caseJoueur.y);
+				casePossible1 = new Point(caseJoueur.x , caseJoueur.y-1);
+				casePossible2 = new Point(caseJoueur.x-1 , caseJoueur.y+1);
+				break;
+			case HAUT :
+				caseParfaite = new Point(caseJoueur.x , caseJoueur.y+1);
+				casePossible1 = new Point(caseJoueur.x-1 , caseJoueur.y);
+				casePossible2 = new Point(caseJoueur.x+1 , caseJoueur.y);
+				break;
+			case BAS :
+				caseParfaite = new Point(caseJoueur.x , caseJoueur.y-1);
+				casePossible1 = new Point(caseJoueur.x-1 , caseJoueur.y);
+				casePossible2 = new Point(caseJoueur.x+1 , caseJoueur.y+1);
+				break;
+			default :
+				caseParfaite = caseAFuir;
+				casePossible1 = caseAFuir;
+				casePossible2 = caseAFuir;
+				break;
+		}
+		if(Brain.PLATEAU.joueurPeutAllerIci(caseParfaite.x, caseParfaite.y, false, true)){
+			return caseParfaite;
+		}
+		else if(Brain.PLATEAU.joueurPeutAllerIci(casePossible1.x, casePossible1.y, false, true)){
+			return casePossible1;
+		}
+		else if(Brain.PLATEAU.joueurPeutAllerIci(casePossible2.x, casePossible2.y, false, true)){
+			return casePossible2;
+		}
+		else{
+			return caseAFuir;
+		}
+
+	}
+	//
+	//@TODO Fonction qui regarde si les objectifs ne tournent pas trop en boucle 
+	//@TODO Si ca tourne en boucle et que ce n'est pas à notre avantage, essayer une nouvelle stratégie
 }

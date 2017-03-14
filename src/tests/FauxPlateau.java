@@ -36,6 +36,7 @@ public class FauxPlateau extends Plateau {
 	public int nombreDeLivresJoueur(int c) {
 		return c*2;
 	}
+
     
 	/**
 	 * Fonction de recherche 
@@ -45,7 +46,7 @@ public class FauxPlateau extends Plateau {
 	 * @return map une map
 	 */
 	
-	@SuppressWarnings({ "serial", "unused" })
+
 	@Override
 	public HashMap<Integer, ArrayList<Point>> cherche(Point depart, int rayon, int masqueDeRecherche) {
 		if (masqueDeRecherche != Plateau.CHERCHE_JOUEUR) return super.cherche(depart, rayon, masqueDeRecherche);
