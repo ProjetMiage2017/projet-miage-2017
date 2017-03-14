@@ -8,34 +8,38 @@ import IA.Brain;
 import clientdesarenes.Bot;
 import jeu.MaitreDuJeu;
 
+/**
+ * Classe Test de Base
+ * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
+ */
 public class TestBase {
 	/**
-	 * Maitre du jeu utilisÃ© pour les tests
+	 * Maitre du jeu utilisé pour les tests
 	 */
 	protected  static MaitreDuJeu mj;
 	
 	/**
-	 * Plateau utilisÃ© pour les tests
+	 * Plateau utilisé pour les tests
 	 */
 	protected  static FauxPlateau plateau;
 	
 	/**
-	 * ChaÃ®ne de caractÃ¨re reprÃ©sentant un plateau utilisÃ©e pour les tests
+	 * chaîne de caractère représentant un plateau utilisé pour les tests
 	 */
 	protected  static String plateauStr;
 	
 	/**
-	 * Bot utilisÃ© pour les tests
+	 * Bot utilisé pour les tests
 	 */
 	protected  static FauxBot joueur;
 	
 	/**
-	 * Faux adversaire utilisÃ© pour les tests
+	 * Faux adversaire utilisé pour les tests
 	 */
 	protected  static FauxJoueur adversaire;
 	
 	/**
-	 * Faux adversaire utilisÃ© pour les tests
+	 * Faux adversaire utilisé pour les tests
 	 */
 	protected  static FauxJoueur j3;
 	

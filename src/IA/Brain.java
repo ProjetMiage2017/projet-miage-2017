@@ -10,7 +10,7 @@ import jeu.Joueur;
 import jeu.Joueur.*;
 
 /**
- * Classe permettant de rÃ©aliser le choix de l'action
+ * Classe permettant de réaliser le choix de l'action
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class Brain {
@@ -201,7 +201,7 @@ public class Brain {
 	}
 
 	/**
-	 * Fonction principale qui dÃ©termine le choix de l'action. Utilise toutes les autres fonctions de la classe
+	 * Fonction principale qui détermine le choix de l'action. Utilise toutes les autres fonctions de la classe
 	 * @return returnAction
 	 */
 	public Action run(){

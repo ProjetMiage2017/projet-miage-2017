@@ -261,16 +261,13 @@ public class Utils {
 	}
 	
 	/** 
-<<<<<<< HEAD
+
 	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
 	 * @param caseAFuir une case
-=======
+
 	 * Determine la case dspo opposee au point passï¿½ en paramettre par rapport au joueur
-	 * @TODO ameliorer l'algo, voir mï¿½me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
-	 * @param le point
->>>>>>> 470c3cd113ab540cf8363d3060d9fca0bc2bd598
 	 * @return le point dispo oppose
-	 * @TODO delete ?
+	 
 	 */
 	public static Point getCaseDispoOpposeA(Point caseAFuir){
 		Point caseJoueur = Brain.JOUEUR.donnePosition();
@@ -287,7 +284,7 @@ public class Utils {
 	}
 	/**
 	 * Determine la case à aller pour fuir
-	 * @param caseAFuir
+	 * @param caseAFuir une case
 	 * @return case destination
 	 */
 	

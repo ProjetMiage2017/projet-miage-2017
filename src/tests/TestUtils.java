@@ -11,7 +11,7 @@ import jeu.Joueur;
 import jeu.Joueur.Action;
 
 /**
- * Classe permettant de réaliser le choix de l'action
+ * Classe de test de la classe Utils qui regroupe les fonctions utiles au Brain
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class TestUtils extends TestBase {

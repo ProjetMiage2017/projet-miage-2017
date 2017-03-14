@@ -8,6 +8,10 @@ import org.junit.Test;
 
 import jeu.Plateau;
 
+/**
+ * Classe de test de la classe Brain qui permet de réaliser le choix de l'action
+ * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
+ */
 public class TestBrain extends TestBase {
 
 	/**
