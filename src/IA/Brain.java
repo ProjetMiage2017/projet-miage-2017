@@ -51,8 +51,8 @@ public class Brain {
 		PLATEAU = plateau;
 		JOUEUR = joueur;
 		NB_LIVRE_TOTAL = Utils.getTotalLivre();
-		NB_LIVRE_FAIBLE = NB_LIVRE_TOTAL/8;
-		NB_LIVRE_MOYEN = NB_LIVRE_TOTAL/4;
+		NB_LIVRE_FAIBLE = NB_LIVRE_TOTAL/8; //9
+		NB_LIVRE_MOYEN = NB_LIVRE_TOTAL/4; //5
 		NB_LIVRE_IMPORTANT = NB_LIVRE_TOTAL/2;
 	
 		//@TODO un nb de livre qui se met à jour selon les nombres de livre des joueurs?
@@ -74,10 +74,22 @@ public class Brain {
 				
 		//cas desespéré
 		if (nombreLivres <= NB_LIVRE_NULL) {
-			//Cas ennemi a proximite et tuable
-			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { 
-				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+			//Cas ennemi a proximite
+			if (distanceAdversaireProche <= 1) { 
+				//Cas ennemi tuable, ou mon esprit est faible et je veux me suicider, ou l'ennemi est rentable à tuer, donc il vaut le risque
+				//@TODO cas spawn a  cote
+				if(Utils.isEnnemyKillable(adversaireLePlusProche, true) || 
+						JOUEUR.donneEsprit() < NB_ESPRIT_FAIBLE ||
+						(Utils.isEnnemyWorthToKill(adversaireLePlusProche, false))){
+					if(distanceAdversaireProche <1)
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+				}
+				else{	
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+				}	
 			} 
+			
 			else {				
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
 					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
@@ -93,10 +105,11 @@ public class Brain {
 		else if(nombreLivres <= NB_LIVRE_FAIBLE){
 			//Cas ennemi a proximite et tuable
 			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
+				if(distanceAdversaireProche <1)
+					return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			}
-			else {
-				
+			else {		
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
 					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
 				}
@@ -112,11 +125,14 @@ public class Brain {
 			if (distanceAdversaireProche <= 1) {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
+					if(distanceAdversaireProche <1)
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
 					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 				}
 				//sinon fuir
 				else{
-					return new Objectif(0, Utils.getCaseDispoOpposeA(adversaireLePlusProche.donnePosition()));
+					System.err.println("FUITE ACTIVE");
+					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
 				}	
 			}
 			else {				
@@ -135,11 +151,14 @@ public class Brain {
 			if (distanceAdversaireProche <= 1) {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
+					if(distanceAdversaireProche <1)
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
 					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 				}
 				//sinon fuir
 				else{
-					return new Objectif(0, Utils.getCaseDispoOpposeA(adversaireLePlusProche.donnePosition()));
+					System.err.println("FUITE ACTIVE");
+					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
 				}	
 			}
 			else {
