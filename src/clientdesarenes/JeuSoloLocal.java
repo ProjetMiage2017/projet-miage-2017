@@ -4,6 +4,7 @@ import gui.FenetreDeJeu;
 import jeu.MaitreDuJeu;
 import jeu.Plateau;
 
+
 public class JeuSoloLocal {
     
     public static void main(String[] args) {

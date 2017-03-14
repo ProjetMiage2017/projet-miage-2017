@@ -45,7 +45,13 @@ public class Brain {
 	int NB_ESPRIT_IMPORTANT = 81;
 	
 	/**
+
+	 * Fonction qui met à jour le joueur et le plateau
+	 * @param plateau un plateau
+	 * @param joueur  un Bot
+
 	 * Fonction qui met ï¿½ jour le joueur et le plateau
+
 	 */
 	public void setPlateauEtJoueur(Plateau plateau, Bot joueur) {
 		PLATEAU = plateau;
@@ -196,7 +202,6 @@ public class Brain {
 
 	/**
 	 * Fonction principale qui dÃ©termine le choix de l'action. Utilise toutes les autres fonctions de la classe
-	 * @param plateau
 	 * @return returnAction
 	 */
 	public Action run(){

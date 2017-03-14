@@ -28,8 +28,7 @@ public class Utils {
 	/**
 	 * Fonction qui calcule notre position en terme de livre par rapport aux autres joueurs
 	 * @return position
-	 * @TODO
-	 * @TODO delete ?
+	 * 
 	 */
 	public static int getPositionForLivres(){
 		int position = 0 ;
@@ -48,6 +47,7 @@ public class Utils {
 	/**
 	 * Fonction qui determine les degats reçus suite à un combat
 	 * @param J l'ennemi
+	 * @param avantage boolean
 	 * @return degatsRecus
 	 */
 	public static int getDamageGivenBy(Joueur J, boolean avantage){
@@ -71,7 +71,9 @@ public class Utils {
 	/**
 	 * Fonction qui verifie si c'est rentable de tuer un ennemi
 	 * @param J l'ennemi
+	 * @param avantage boolean
 	 * @return isWorth
+
 	 */
 	public static boolean isEnnemyWorthToKill(Joueur J, boolean avantage){
 		if(isEnnemyKillable(J, avantage)){
@@ -148,7 +150,7 @@ public class Utils {
 	 * @param depart point de départ
 	 * @param arrivee point d'arrivée
 	 * @return distance
-	 * @TODO a delete ?
+	 * 
 	 */
 	public static int getDistance(Point depart, Point arrivee) {
 		return (int) Math.abs(depart.getX() - arrivee.getX() + depart.getY() - arrivee.getY());
@@ -156,8 +158,8 @@ public class Utils {
 	
 	/**
 	 * Renvoie la distance r�elle entre deux points
-	 * @param depart 
-	 * @param arrivee
+	 * @param depart  point de d�part
+	 * @param arrivee point d'arriv�e
 	 * @return distance
 	 */
 	public static int getDistanceWithObstacles(Point depart, Point arrivee){
@@ -167,8 +169,8 @@ public class Utils {
 	
 	/**
 	 * Détermine la position relative d'un point par rapport à un autre
-	 * @param referentiel
-	 * @param destination
+	 * @param referentiel un referentiel
+	 * @param destination une destination
 	 * @return position relative
 	 */
 	public static Action pointCardinal(Point referentiel, Point destination) {
@@ -259,9 +261,14 @@ public class Utils {
 	}
 	
 	/** 
+<<<<<<< HEAD
+	 * Determine la case dspo opposee au point pass� en paramettre par rapport au joueur
+	 * @param caseAFuir une case
+=======
 	 * Determine la case dspo opposee au point pass� en paramettre par rapport au joueur
 	 * @TODO ameliorer l'algo, voir m�me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
 	 * @param le point
+>>>>>>> 470c3cd113ab540cf8363d3060d9fca0bc2bd598
 	 * @return le point dispo oppose
 	 * @TODO delete ?
 	 */
