@@ -210,6 +210,10 @@ public class Brain {
 		return Utils.pointCardinal(JOUEUR.donnePosition(), objPoint);
 	}
 
+	/**
+	 * get objectif courant
+	 * @return objectif
+	 */
 	public Objectif objectif() {
 		return this.objectif;
 	}

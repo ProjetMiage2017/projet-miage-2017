@@ -1,16 +1,21 @@
 package IA;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import jeu.Plateau;
 
 public class Objectif {
+	public static ArrayList<Objectif> listeObjectif = new ArrayList<Objectif>();
+	
 	private int type;
+	
 	private Point position;
 	
 	public Objectif(int type, Point position) {
 		this.type = type;
 		this.position = position;
+		this.listeObjectif.add(this);
 	}
 	
 	public int type() {
