@@ -75,7 +75,7 @@ public class Brain {
 		//cas desespéré
 		if (nombreLivres <= NB_LIVRE_NULL) {
 			//Cas ennemi a proximite et tuable
-			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { 
+			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) { 
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			} 
 			else {				
@@ -92,7 +92,7 @@ public class Brain {
 		//cas ou on peut tenter des actions risquées
 		else if(nombreLivres <= NB_LIVRE_FAIBLE){
 			//Cas ennemi a proximite et tuable
-			if (distanceAdversaireProche == 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
+			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
 				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
 			}
 			else {
@@ -109,7 +109,7 @@ public class Brain {
 		//@TODO
 		else if(nombreLivres <= NB_LIVRE_MOYEN){
 			//Cas ennemi a proximite
-			if (distanceAdversaireProche == 1) {
+			if (distanceAdversaireProche <= 1) {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
 					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
@@ -132,7 +132,7 @@ public class Brain {
 		//@TODO
 		else if(nombreLivres <= NB_LIVRE_IMPORTANT){
 			//Cas ennemi a proximite
-			if (distanceAdversaireProche == 1) {
+			if (distanceAdversaireProche <= 1) {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
 					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
