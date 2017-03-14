@@ -195,14 +195,11 @@ public class TestUtils {
 	 */
 	@Test
 	public void testPointLePlusProche() {
-		Point[] points = new Point[5];
-		for (int i = 0; i < points.length; i++) {
-			points[i] = new Point((i*2) + 1, (i*2) + 1);
-		}
+		Point[] points = new Point[]{
+				new Point(5, 0), new Point(6, 0), new Point(4, 1)
+		};
 		
-		assertEquals(new Point(1, 1), Utils.pointLePlusProche(new Point(2, 1), points));
-		assertEquals(new Point(1, 1), Utils.pointLePlusProche(new Point(1, 1), points));
-		assertEquals(new Point(9, 9), Utils.pointLePlusProche(new Point(15, 15), points));
+		assertEquals(new Point(5, 0), Utils.pointLePlusProche(new Point(5, 1), points));
 	}
 	
 	/**
