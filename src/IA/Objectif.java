@@ -4,23 +4,58 @@ import java.awt.Point;
 
 import jeu.Plateau;
 
+
+/**
+ * Classe qui defini les  types d'objectifs possible
+ * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
+ */
+
 public class Objectif {
+	
+	
+	/**
+	 *  Type de l'objectif
+	 */
 	private int type;
+	
+	/**
+	 *  Position de l'objectif
+	 */
 	private Point position;
 	
+	
+	/**
+	 *  Construteur
+	 *  @param type un type
+	 *  @param position un point
+	 */
 	public Objectif(int type, Point position) {
 		this.type = type;
 		this.position = position;
 	}
 	
+	/**
+	 *  Methode qui retourne le type de l'objectif
+	 *  @return type
+	 */
 	public int type() {
 		return this.type;
 	}
 	
+	
+	/**
+	 *  Methode qui retourne la position de l'objectif
+	 *  @return position
+	 */
 	public Point position() {
 		return this.position;
 	}
 
+	
+	/**
+	 *  Methode qui affiche l'objectif
+	 *  @return typeStr
+	 */
 	public String toString() {
 		String typeStr = "Case";
 		switch(this.type) {

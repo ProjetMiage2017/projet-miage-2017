@@ -46,6 +46,8 @@ public class Brain {
 	
 	/**
 	 * Fonction qui met ‡ jour le joueur et le plateau
+	 * @param plateau un plateau
+	 * @param joueur  un Bot
 	 */
 	public void setPlateauEtJoueur(Plateau plateau, Bot joueur) {
 		PLATEAU = plateau;
@@ -169,7 +171,6 @@ public class Brain {
 
 	/**
 	 * Fonction principale qui d√©termine le choix de l'action. Utilise toutes les autres fonctions de la classe
-	 * @param plateau
 	 * @return returnAction
 	 */
 	public Action run(){

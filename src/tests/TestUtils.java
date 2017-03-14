@@ -15,8 +15,8 @@ import jeu.Joueur.Action;
 import jeu.MaitreDuJeu;
 
 /**
- * Classe de test des méthodes de Utils
- * @author alain
+ * Classe permettant de réaliser le choix de l'action
+ * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class TestUtils {
 	/**
