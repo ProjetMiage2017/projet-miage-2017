@@ -10,7 +10,7 @@ import jeu.Joueur;
  */
 
 public class FauxJoueur extends Joueur {
-	
+
 	/**
 	 *  Nombre de point d'esprit
 	 */
@@ -34,7 +34,7 @@ public class FauxJoueur extends Joueur {
 	
 	
 	/**
-	 *  Accésseur de la variable esprit
+	 *  Accï¿½sseur de la variable esprit
 	 *  @return esprit
 	 */
 	@Override
@@ -53,7 +53,7 @@ public class FauxJoueur extends Joueur {
 	
 	
 	/**
-	 *  Accésseur de la variable couleur
+	 *  Accï¿½sseur de la variable couleur
 	 *  @return couleur
 	 */
 	@Override
@@ -64,11 +64,6 @@ public class FauxJoueur extends Joueur {
 	@Override
 	public Point donnePosition() {
 		return new Point(2, 7 + this.donneCouleurNumerique());
-	}
-	
-	@Override
-	public String toString() {
-		return nom;
 	}
 	
 	@Override
