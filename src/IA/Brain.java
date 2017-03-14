@@ -210,7 +210,7 @@ public class Brain {
 	 * @return true si tout va bien , false si  il y a un probleme
 	 */
 	public boolean checkObjectif(){
-		if(Objectif.listeObjectif.size() > 15 && Objectif.listeObjectif != null){
+		if(Objectif.listeObjectif.size() > 15 && Objectif.listeObjectif != null && JOUEUR.nombreLivres() <= NB_LIVRE_MOYEN){
 			int dureePrevue = this.objectif.dureePrevue();
 			int dernierObjectif = Objectif.listeObjectif.size()-1;
 			if(this.objectif.equals(Objectif.listeObjectif.get(dernierObjectif - dureePrevue -1))){
@@ -227,9 +227,10 @@ public class Brain {
 	public Objectif defineOtherObjectif(){
 		System.out.println("NOUVEL OBJECTIF");
 		System.out.println("NOUVEL OBJECTIF");
-
 		System.out.println("NOUVEL OBJECTIF");
-
+		System.out.println("NOUVEL OBJECTIF");
+		System.out.println("NOUVEL OBJECTIF");
+		System.out.println("NOUVEL OBJECTIF");
 		System.out.println("NOUVEL OBJECTIF");
 
 		Objectif dernierObjectif = Objectif.listeObjectif.get(Objectif.listeObjectif.size()-1);

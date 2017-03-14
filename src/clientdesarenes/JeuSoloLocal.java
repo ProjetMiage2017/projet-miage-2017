@@ -11,13 +11,13 @@ public class JeuSoloLocal {
         Plateau p;
         
         //tour 190 : rencontre entre carapuce et bulbizarre
-        p = new Plateau(1200, MaitreDuJeu.PLATEAU_PAR_DEFAUT);
-        //p = Plateau.generePlateauAleatoire( 1200, 10, 4, 8, 7);
+        //p = new Plateau(1200, MaitreDuJeu.PLATEAU_PAR_DEFAUT);
+        p = Plateau.generePlateauAleatoire( 1200, 10, 4, 8, 7);
         
         MaitreDuJeu jeu = new MaitreDuJeu(p);
         
         jeu.metJoueurEnPosition(0, new Bot("Carapuce", "s")); //
-        jeu.metJoueurEnPosition(3, new Bot("Bulbizarre", "cli4_PASS4"));
+        //jeu.metJoueurEnPosition(3, new Bot("Bulbizarre", "cli4_PASS4"));
         
         //jeu.metJoueurEnPosition(1, new jeu.Joueur("Rouge"));
         //jeu.metJoueurEnPosition(2, new jeu.Joueur("Jaune"));

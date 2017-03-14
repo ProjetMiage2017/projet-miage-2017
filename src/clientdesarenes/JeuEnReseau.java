@@ -8,7 +8,7 @@ public class JeuEnReseau {
 
     public static void main(String[] args) {
      
-    	ClientReseau cli = new ClientReseau(new Bot("Salameche", "cli5_PASS5"));
+    	ClientReseau cli = new ClientReseau(new Bot("Chat-Bot", "group4_DesyedAk3"));
     	new FenetreDeJeu( cli).setVisible(true);
     	while( cli.donneEtat() != ClientReseau.ETAT_QUITTER) {
 	        if ( cli.donneEtat() == ClientReseau.ETAT_NON_CONNECTE) {
