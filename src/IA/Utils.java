@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jeu.astar.Node;
+
 import jeu.*;
 import jeu.Joueur.Action;
 import IA.Brain;
@@ -158,7 +160,8 @@ public class Utils {
 	 * @return distance
 	 */
 	public static int getDistanceWithObstacles(Point depart, Point arrivee){
-		return Brain.PLATEAU.donneCheminEntre(depart, arrivee).size();
+		ArrayList<Node> chemin = Brain.PLATEAU.donneCheminEntre(depart, arrivee);
+		return chemin == null ? null : chemin.size();
 	}
 	
 	/**
@@ -255,8 +258,8 @@ public class Utils {
 	}
 	
 	/** 
-	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
-	 * @TODO ameliorer l'algo, voir même si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
+	 * Determine la case dspo opposee au point passï¿½ en paramettre par rapport au joueur
+	 * @TODO ameliorer l'algo, voir mï¿½me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
 	 * @param le point
 	 * @return le point dispo oppose
 	 */

@@ -6,20 +6,51 @@ import java.awt.Point;
 
 import org.junit.Test;
 
+import jeu.Plateau;
+
 public class TestBrain extends TestBase {
 
 	/**
 	 * Test de comportement ; peu de livres et adversaire proche avec peu d'esprit
 	 */
 	@Test
-	public void testLowBookKillableOpponent() {
-		joueur.setLivres(1);
+	public void testLowBookCountKillableOpponent() {
+		joueur.setLivres(0);
 		adversaire.setEsprit(12);
+		joueur.setPosition(new Point(4, 0));
+		brain.run();
 		
-		joueur.setPosition(new Point(4, 1));
-		
-		//brain.run();
-		//System.out.println(brain.objectif());
+		assertEquals(new Point(3, 0), brain.objectif().position());
+		assertEquals(Plateau.CHERCHE_LIVRE, brain.objectif().type());
 	}
 
+	/**
+	 * Test de comportement : peu de livres, pas d'adversaire proche et un livre proche
+	 */
+	@Test
+	public void testLowBookCountBookAvailable() {
+		joueur.setLivres(0);
+		joueur.setEsprit(100);
+		adversaire.setEsprit(100);
+		joueur.setPosition(new Point(3, 3));
+		brain.run();
+		
+		assertEquals(new Point(3, 0), brain.objectif().position());
+		assertEquals(Plateau.CHERCHE_LIVRE, brain.objectif().type());
+	}
+	
+	/**
+	 * Test de comportement : peu de livres, pas d'adversaire proche, livre trop loin
+	 */
+	@Test
+	public void testLowBookCountBookNotAvailable() {
+		joueur.setLivres(0);
+		joueur.setEsprit(0);
+		adversaire.setEsprit(100);
+		joueur.setPosition(new Point(3, 3));
+		brain.run();
+		
+		assertEquals(new Point(2, 2), brain.objectif().position());
+		assertEquals(Plateau.CHERCHE_LIT, brain.objectif().type());
+	}
 }

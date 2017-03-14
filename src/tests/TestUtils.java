@@ -187,4 +187,10 @@ public class TestUtils extends TestBase {
 		joueur.setPosition(new Point(2, 12));
 		assertEquals(j4, Utils.getJoueurLePlusProche());
 	}
+	
+	@Test
+	public void testGetLivreLePlusProche() {
+		joueur.setPosition(new Point(4, 0));
+		assertEquals(new Point(3, 0), Utils.getLivreLePlusProche());
+	}
 }

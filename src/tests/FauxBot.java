@@ -7,6 +7,7 @@ import clientdesarenes.Bot;
 public class FauxBot extends Bot {
 	int nombreLivres = 0;
 	Point position = new Point(4,1);
+	int esprit = 100;
 	
 	public FauxBot(String id, String cle) {
 		super(id, cle);
@@ -28,5 +29,14 @@ public class FauxBot extends Bot {
 	@Override
 	public Point donnePosition() {
 		return this.position;
+	}
+	
+	public void setEsprit(int e) {
+		this.esprit = e;
+	}
+	
+	@Override
+	public int donneEsprit() {
+		return this.esprit;
 	}
 }
