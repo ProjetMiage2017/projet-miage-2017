@@ -45,7 +45,7 @@ public class Brain {
 	int NB_ESPRIT_IMPORTANT = 81;
 	
 	/**
-	 * Fonction qui met à jour le joueur et le plateau
+	 * Fonction qui met ï¿½ jour le joueur et le plateau
 	 */
 	public void setPlateauEtJoueur(Plateau plateau, Bot joueur) {
 		PLATEAU = plateau;
@@ -55,7 +55,7 @@ public class Brain {
 		NB_LIVRE_MOYEN = NB_LIVRE_TOTAL/4; //5
 		NB_LIVRE_IMPORTANT = NB_LIVRE_TOTAL/2;
 	
-		//@TODO un nb de livre qui se met à jour selon les nombres de livre des joueurs?
+		//@TODO un nb de livre qui se met ï¿½ jour selon les nombres de livre des joueurs?
 	}
 	
 	/**
@@ -72,11 +72,11 @@ public class Brain {
 		
 		Point litProche = Utils.getLitLePlusProche();
 				
-		//cas desespéré
+		//cas desespï¿½rï¿½
 		if (nombreLivres <= NB_LIVRE_NULL) {
 			//Cas ennemi a proximite
 			if (distanceAdversaireProche <= 1) { 
-				//Cas ennemi tuable, ou mon esprit est faible et je veux me suicider, ou l'ennemi est rentable à tuer, donc il vaut le risque
+				//Cas ennemi tuable, ou mon esprit est faible et je veux me suicider, ou l'ennemi est rentable ï¿½ tuer, donc il vaut le risque
 				//@TODO cas spawn a  cote
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true) || 
 						JOUEUR.donneEsprit() < NB_ESPRIT_FAIBLE ||
@@ -96,12 +96,12 @@ public class Brain {
 				}
 				else { // Aucun des livres n'est prenable ou pas assez d'esprit
 					//@TODO suicide
-					return new Objectif(0, litProche);
+					return new Objectif(Plateau.CHERCHE_LIT, litProche);
 					
 				}
 			}
 		}
-		//cas ou on peut tenter des actions risquées
+		//cas ou on peut tenter des actions risquï¿½es
 		else if(nombreLivres <= NB_LIVRE_FAIBLE){
 			//Cas ennemi a proximite et tuable
 			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
@@ -118,7 +118,7 @@ public class Brain {
 				}
 			}
 		}
-		//cas ou il faut adapter un comportement assez sécurisé
+		//cas ou il faut adapter un comportement assez sï¿½curisï¿½
 		//@TODO
 		else if(nombreLivres <= NB_LIVRE_MOYEN){
 			//Cas ennemi a proximite
@@ -179,7 +179,7 @@ public class Brain {
 				}
 			}
 		}
-		//Cas ou il faut juste fuir et camper à un lit (sans en abuser pour ne pas perdre de PC) pour garder nos livre sle plus longtemps possible
+		//Cas ou il faut juste fuir et camper ï¿½ un lit (sans en abuser pour ne pas perdre de PC) pour garder nos livre sle plus longtemps possible
 		//@TODO
 		else{
 
@@ -188,7 +188,7 @@ public class Brain {
 			}
 			else{
 				//@TODO
-				//campe a côté du lit ou se dirige vers le lit le plus proche s'il n'est pas encore a côté
+				//campe a cï¿½tï¿½ du lit ou se dirige vers le lit le plus proche s'il n'est pas encore a cï¿½tï¿½
 			}
 			return new Objectif(Plateau.CHERCHE_LIT, litProche);
 		}
@@ -210,4 +210,7 @@ public class Brain {
 		return Utils.pointCardinal(JOUEUR.donnePosition(), objPoint);
 	}
 
+	public Objectif objectif() {
+		return this.objectif;
+	}
 }
