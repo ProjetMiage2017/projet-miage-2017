@@ -37,7 +37,7 @@ public class Objectif {
 	public Objectif(int type, Point position) {
 		this.type = type;
 		this.position = position;
-		this.listeObjectif.add(this);
+		Objectif.listeObjectif.add(this);
 	}
 	
 	/**
@@ -78,6 +78,6 @@ public class Objectif {
 			typeStr = "Case";
 		}
 
-		return this.position + " " + typeStr;
+		return "(" + (int)this.position.getX() + "," + (int)this.position.getY() + ") " + typeStr;
 	}
 }
