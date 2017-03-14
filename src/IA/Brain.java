@@ -135,6 +135,10 @@ public class Brain {
 					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
 				}	
 			}
+			//fuir si ennemi a 2 cases et plus fort
+			/*else if (distanceAdversaireProche <= 2 && Utils.isEnnemyKillable(adversaireLePlusProche, false)) {
+				return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
+			}*/
 			else {				
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
 					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
@@ -161,6 +165,10 @@ public class Brain {
 					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
 				}	
 			}
+			//fuir si ennemi a 2 cases et plus fort
+			/*else if (distanceAdversaireProche <= 2 && Utils.isEnnemyKillable(adversaireLePlusProche, false)) {
+				return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
+			}*/
 			else {
 				//utilisation de NB_ESPRIT_MILIEU contrairement aux fonctions precedentes histoire de garder une zone de confort
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_MILIEU + distanceLivreProche) { // cas on peut aller chercher le livre
