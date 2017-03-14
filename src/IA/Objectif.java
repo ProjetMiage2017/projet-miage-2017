@@ -23,6 +23,12 @@ public class Objectif {
 	 */
 	private int type;
 	
+	
+	/**
+	 *  nombre de tour prevu pour l'objectif
+	 */
+	private int dureePrevue;
+	
 	/**
 	 *  Position de l'objectif
 	 */
@@ -34,9 +40,11 @@ public class Objectif {
 	 *  @param type un type
 	 *  @param position un point
 	 */
-	public Objectif(int type, Point position) {
+	public Objectif(int type, Point position, int dureePrevue) {
 		this.type = type;
 		this.position = position;
+		this.dureePrevue = dureePrevue;
+
 		Objectif.listeObjectif.add(this);
 	}
 	
@@ -55,6 +63,14 @@ public class Objectif {
 	 */
 	public Point position() {
 		return this.position;
+	}
+	
+	/**
+	 *  Methode qui retourne duree prevue de l'objectif
+	 *  @return position
+	 */
+	public int dureePrevue() {
+		return this.dureePrevue;
 	}
 
 	
@@ -77,7 +93,6 @@ public class Objectif {
 		default:
 			typeStr = "Case";
 		}
-
 		return "(" + (int)this.position.getX() + "," + (int)this.position.getY() + ") " + typeStr;
 	}
 }

@@ -261,21 +261,27 @@ public class Utils {
 	}
 	
 	/** 
-
-
-	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
-	 * @param caseAFuir une case
-
+<<<<<<< HEAD
+	 * Determine la distance avec le lit le plus proche
+	 * @return la distance
+	 */
+	public static int getDistanceDuLitLePlusProche(){
+		Point litLePlusProche = getLitLePlusProche();
+		return getDistanceWithObstacles(Brain.JOUEUR.donnePosition(), litLePlusProche);
+	}
+	
+	/** 
 	 * Determine la case dspo opposee au point passï¿½ en paramettre par rapport au joueur
+	 * @TODO ameliorer l'algo, voir mï¿½me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
+	 * @param le point
 	 * @return le point dispo oppose
-	 
-
+=======
 	 * Determine la case dspo opposee au point passÃ© en paramettre par rapport au joueur
 	 * @param caseAFuir une case
 	 * @TODO ameliorer l'algo, voir mÃªme si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
+>>>>>>> origin/master
 	 * @TODO delete ?
 	 * @return le point dispo oppose
-
 	 */
 	public static Point getCaseDispoOpposeA(Point caseAFuir){
 		Point caseJoueur = Brain.JOUEUR.donnePosition();
@@ -291,13 +297,8 @@ public class Utils {
 		}
 	}
 	/**
-
-	 * Determine la case à aller pour fuir
-	 * @param caseAFuir une case
-
 	 * Determine la case ï¿½ aller pour fuir
 	 * @param caseAFuir
-
 	 * @return case destination
 	 */
 	

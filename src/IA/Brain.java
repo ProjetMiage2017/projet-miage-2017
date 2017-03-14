@@ -10,7 +10,7 @@ import jeu.Joueur;
 import jeu.Joueur.*;
 
 /**
- * Classe permettant de réaliser le choix de l'action
+ * Classe permettant de rÃ©aliser le choix de l'action
  * @author Jeremy Rossignol / Alain Drillon / Abdoulbak Mohamedfouad
  */
 public class Brain {
@@ -69,6 +69,11 @@ public class Brain {
 	 * @return le nouvel objectif
 	 */
 	protected Objectif nouvelObjectif() {		
+		
+		if(! this.checkObjectif()){
+			return this.defineOtherObjectif();
+		}
+		
 		int nombreLivres = JOUEUR.nombreLivres();		
 		Joueur adversaireLePlusProche = Utils.getJoueurLePlusProche();
 		int distanceAdversaireProche = Utils.getDistanceDuJoueurLePlusProche();
@@ -88,21 +93,21 @@ public class Brain {
 						JOUEUR.donneEsprit() < NB_ESPRIT_FAIBLE ||
 						(Utils.isEnnemyWorthToKill(adversaireLePlusProche, false))){
 					if(distanceAdversaireProche <1)
-						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
-					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition(), distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition(), distanceAdversaireProche  + Utils.getTurnsToKill(adversaireLePlusProche)+1);
 				}
 				else{	
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche, distanceLivreProche+1);
 				}	
 			} 
 			
 			else {				
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche, distanceLivreProche+1);
 				}
 				else { // Aucun des livres n'est prenable ou pas assez d'esprit
 					//@TODO suicide
-					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+					return new Objectif(Plateau.CHERCHE_LIT, litProche,distanceLivreProche+1);
 					
 				}
 			}
@@ -112,15 +117,15 @@ public class Brain {
 			//Cas ennemi a proximite et tuable
 			if (distanceAdversaireProche <= 1 && Utils.isEnnemyKillable(adversaireLePlusProche, true)) {
 				if(distanceAdversaireProche <1)
-					return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
-				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+					return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition(),distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
+				return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition(),distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
 			}
 			else {		
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche, distanceLivreProche+1);
 				}
 				else { // Aucun des livres n'est prenable
-					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+					return new Objectif(Plateau.CHERCHE_LIT, litProche, distanceLivreProche+1);
 				}
 			}
 		}
@@ -132,13 +137,13 @@ public class Brain {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
 					if(distanceAdversaireProche <1)
-						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
-					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition(), distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition(), distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
 				}
 				//sinon fuir
 				else{
 					System.err.println("FUITE ACTIVE");
-					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
+					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()), 2+1);
 				}	
 			}
 			//fuir si ennemi a 2 cases et plus fort
@@ -147,10 +152,10 @@ public class Brain {
 			}*/
 			else {				
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_FAIBLE + distanceLivreProche) { // cas on peut aller chercher le livre
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche, distanceLivreProche+1);
 				}
 				else { // Aucun des livres n'est prenable
-					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+					return new Objectif(Plateau.CHERCHE_LIT, litProche, Utils.getDistanceDuLitLePlusProche()+1);
 				}
 			}
 		}
@@ -162,13 +167,13 @@ public class Brain {
 				// si il est tuable
 				if(Utils.isEnnemyKillable(adversaireLePlusProche, true)){
 					if(distanceAdversaireProche <1)
-						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition());
-					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition());
+						return new Objectif(Plateau.CHERCHE_JOUEUR, JOUEUR.donnePosition(), distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
+					return new Objectif(Plateau.CHERCHE_JOUEUR, adversaireLePlusProche.donnePosition(), distanceAdversaireProche + Utils.getTurnsToKill(adversaireLePlusProche)+1);
 				}
 				//sinon fuir
 				else{
 					System.err.println("FUITE ACTIVE");
-					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()));
+					return new Objectif(0, Utils.fuir(adversaireLePlusProche.donnePosition()), 2+1);
 				}	
 			}
 			//fuir si ennemi a 2 cases et plus fort
@@ -178,10 +183,10 @@ public class Brain {
 			else {
 				//utilisation de NB_ESPRIT_MILIEU contrairement aux fonctions precedentes histoire de garder une zone de confort
 				if (JOUEUR.donneEsprit() > NB_ESPRIT_MILIEU + distanceLivreProche) { // cas on peut aller chercher le livre
-					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche);
+					return new Objectif(Plateau.CHERCHE_LIVRE, livreProche, distanceLivreProche+1);
 				}
 				else { // Aucun des livres n'est prenable
-					return new Objectif(Plateau.CHERCHE_LIT, litProche);
+					return new Objectif(Plateau.CHERCHE_LIT, litProche, Utils.getDistanceDuLitLePlusProche()+1);
 				}
 			}
 		}
@@ -190,18 +195,54 @@ public class Brain {
 		else{
 
 			if (JOUEUR.donneEsprit() < NB_ESPRIT_IMPORTANT){
-				return new Objectif(Plateau.CHERCHE_LIT, litProche);
+				return new Objectif(Plateau.CHERCHE_LIT, litProche, Utils.getDistanceDuLitLePlusProche()+1);
 			}
 			else{
 				//@TODO
 				//campe a cï¿½tï¿½ du lit ou se dirige vers le lit le plus proche s'il n'est pas encore a cï¿½tï¿½
 			}
-			return new Objectif(Plateau.CHERCHE_LIT, litProche);
+			return new Objectif(Plateau.CHERCHE_LIT, litProche, Utils.getDistanceDuLitLePlusProche()+1);
 		}
 	}
 
 	/**
-	 * Fonction principale qui détermine le choix de l'action. Utilise toutes les autres fonctions de la classe
+	 * Verifie que l'objectif a bien fini par etre atteinds
+	 * @return true si tout va bien , false si  il y a un probleme
+	 */
+	public boolean checkObjectif(){
+		if(Objectif.listeObjectif.size() > 15 && Objectif.listeObjectif != null){
+			int dureePrevue = this.objectif.dureePrevue();
+			int dernierObjectif = Objectif.listeObjectif.size()-1;
+			if(this.objectif.equals(Objectif.listeObjectif.get(dernierObjectif - dureePrevue -1))){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Defini un nouveau objectif si ca a bouclé
+	 * @return un nouveau objectif
+	 */
+	public Objectif defineOtherObjectif(){
+		System.out.println("NOUVEL OBJECTIF");
+		System.out.println("NOUVEL OBJECTIF");
+
+		System.out.println("NOUVEL OBJECTIF");
+
+		System.out.println("NOUVEL OBJECTIF");
+
+		Objectif dernierObjectif = Objectif.listeObjectif.get(Objectif.listeObjectif.size()-1);
+		if(dernierObjectif.type() == Plateau.CHERCHE_LIT){
+			return new Objectif(PLATEAU.CHERCHE_LIVRE, Utils.getLivreLePlusProche(), Utils.getDistanceDuLivreLePlusProche());
+		}
+		else{
+			return new Objectif(PLATEAU.CHERCHE_LIT, Utils.getLitLePlusProche(), Utils.getDistanceDuLitLePlusProche());
+		}	
+	}
+	
+	/**
+	 * Fonction principale qui dÃ©termine le choix de l'action. Utilise toutes les autres fonctions de la classe
 	 * @return returnAction
 	 */
 	public Action run(){
