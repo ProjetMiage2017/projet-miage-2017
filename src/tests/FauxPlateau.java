@@ -17,7 +17,7 @@ public class FauxPlateau extends Plateau {
 		return c*2;
 	}
 
-	@SuppressWarnings({ "serial", "unused" })
+	@SuppressWarnings({ })
 	@Override
 	public HashMap<Integer, ArrayList<Point>> cherche(Point depart, int rayon, int masqueDeRecherche) {
 		if (masqueDeRecherche != Plateau.CHERCHE_JOUEUR) return super.cherche(depart, rayon, masqueDeRecherche);
