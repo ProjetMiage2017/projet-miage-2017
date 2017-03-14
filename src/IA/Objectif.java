@@ -1,6 +1,7 @@
 package IA;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import jeu.Plateau;
 
@@ -12,6 +13,10 @@ import jeu.Plateau;
 
 public class Objectif {
 	
+	/**
+	 * Garde la liste des objectifs
+	 */
+	public static ArrayList<Objectif> listeObjectif = new ArrayList<Objectif>();
 	
 	/**
 	 *  Type de l'objectif
@@ -32,6 +37,7 @@ public class Objectif {
 	public Objectif(int type, Point position) {
 		this.type = type;
 		this.position = position;
+		Objectif.listeObjectif.add(this);
 	}
 	
 	/**
@@ -72,6 +78,6 @@ public class Objectif {
 			typeStr = "Case";
 		}
 
-		return this.position + " " + typeStr;
+		return "(" + (int)this.position.getX() + "," + (int)this.position.getY() + ") " + typeStr;
 	}
 }

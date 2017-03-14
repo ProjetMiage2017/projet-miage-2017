@@ -188,9 +188,22 @@ public class TestUtils extends TestBase {
 		assertEquals(j4, Utils.getJoueurLePlusProche());
 	}
 	
+	/**
+	 * Teste les méthodes getLivreLePlusProche() et getDistanceDuLivreLePlusProche()
+	 */
 	@Test
 	public void testGetLivreLePlusProche() {
 		joueur.setPosition(new Point(4, 0));
 		assertEquals(new Point(3, 0), Utils.getLivreLePlusProche());
+		assertEquals(1, Utils.getDistanceDuLivreLePlusProche());
+	}
+	
+	/**
+	 * Teste la méthode getLitLePlusProche()
+	 */
+	@Test
+	public void testGetLitLePlusProche() {
+		joueur.setPosition(new Point(4, 0));
+		assertEquals(new Point(2, 2), Utils.getLitLePlusProche());
 	}
 }
