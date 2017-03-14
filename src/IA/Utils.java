@@ -82,7 +82,7 @@ public class Utils {
 			}
 			else{
 				//@TODO
-				//nb de tour à calculer pour être sur qu'on attrape le mecet si il est attrapable
+				//nb de tour ï¿½ calculer pour ï¿½tre sur qu'on attrape le mecet si il est attrapable
 				int x = 0;
 				return Brain.PLATEAU.nombreDeLivresJoueur(J.donneCouleurNumerique())*20 + x < getDamageGivenBy(J, avantage);
 			}
@@ -158,8 +158,8 @@ public class Utils {
 	
 	/**
 	 * Renvoie la distance rï¿½elle entre deux points
-	 * @param depart  point de départ
-	 * @param arrivee point d'arrivée
+	 * @param depart  point de dï¿½part
+	 * @param arrivee point d'arrivï¿½e
 	 * @return distance
 	 */
 	public static int getDistanceWithObstacles(Point depart, Point arrivee){
@@ -261,16 +261,11 @@ public class Utils {
 	}
 	
 	/** 
-<<<<<<< HEAD
-	 * Determine la case dspo opposee au point passé en paramettre par rapport au joueur
+	 * Determine la case dspo opposee au point passÃ© en paramettre par rapport au joueur
 	 * @param caseAFuir une case
-=======
-	 * Determine la case dspo opposee au point passï¿½ en paramettre par rapport au joueur
-	 * @TODO ameliorer l'algo, voir mï¿½me si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
-	 * @param le point
->>>>>>> 470c3cd113ab540cf8363d3060d9fca0bc2bd598
-	 * @return le point dispo oppose
+	 * @TODO ameliorer l'algo, voir mÃªme si on ne peut pas fuir vers des lits pour essayer de contre-attaquer
 	 * @TODO delete ?
+	 * @return le point dispo oppose
 	 */
 	public static Point getCaseDispoOpposeA(Point caseAFuir){
 		Point caseJoueur = Brain.JOUEUR.donnePosition();
@@ -286,7 +281,7 @@ public class Utils {
 		}
 	}
 	/**
-	 * Determine la case à aller pour fuir
+	 * Determine la case ï¿½ aller pour fuir
 	 * @param caseAFuir
 	 * @return case destination
 	 */
@@ -342,5 +337,5 @@ public class Utils {
 	}
 	//
 	//@TODO Fonction qui regarde si les objectifs ne tournent pas trop en boucle 
-	//@TODO Si ca tourne en boucle et que ce n'est pas à notre avantage, essayer une nouvelle stratégie
+	//@TODO Si ca tourne en boucle et que ce n'est pas ï¿½ notre avantage, essayer une nouvelle stratï¿½gie
 }
